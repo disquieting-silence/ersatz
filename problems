@@ -1,0 +1,19 @@
+Usability problems:
+
+- no standard messages.
+-
+- forget to turn off riposte
+- default cool-off period is 0
+- no groups
+- hangup on call.
+- integrations:
+   * http://www.openstreetmap.org/?mlat=-27.5057851&mlon=153.0587006&zoom=15&layers=M
+- closing Cursor twice on Riposte or more
+- SQL injection ... escaping characters.
+
+Current:
+- no standard shorcuts
+- message falls off the screen
+
+Resolved:
+  - need to click (rather than long click) to edit riposte.

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent" android:layout_height="fill_parent"
+                  android:orientation="vertical">
+
+    <LinearLayout android:orientation="vertical"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:text="@string/insert_plant_ui_label"
+                />
+
+        <Spinner
+                android:id="@+id/plant_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:prompt="@string/insert_plant_ui_hint"
+                />
+    </LinearLayout>
+    
+    <TextView android:layout_height="wrap_content" android:layout_width="fill_parent"
+              android:layout_marginTop="30dip"
+              android:text="@string/insert_plant_ui_preview"/>
+
+    <TextView android:id="@+id/preview"
+              android:layout_marginTop="10dip"
+              android:layout_marginLeft="10dip"
+              android:layout_marginRight="10dip"
+              android:layout_height="wrap_content"
+              android:layout_width="fill_parent"
+              />
+
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent"
+                  android:layout_height="fill_parent">
+        <Button android:id="@+id/cancel"
+                android:text="@string/ui_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"  android:layout_gravity="bottom"/>
+
+        <Button android:id="@+id/confirm"
+                android:text="@string/ui_confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"  android:layout_gravity="bottom"/>
+    </LinearLayout>
+
+</LinearLayout>

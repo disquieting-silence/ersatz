@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+         android:layout_width="fill_parent"
+         android:layout_height="fill_parent"
+         android:id="@+id/tabHost">
+
+<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+                  android:orientation="vertical">
+    <TabWidget
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@android:id/tabs"
+            />
+
+    <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_below="@android:id/tabs"
+            android:layout_height="0dip"
+            android:layout_weight="1.0"
+            android:id="@android:id/tabcontent"
+            >
+
+        <LinearLayout android:id="@+id/tab_general"
+                     android:layout_width="fill_parent"
+                     android:layout_height="fill_parent"
+                     android:orientation="vertical">
+            
+            <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="horizontal">
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="@string/edit_ui_riposte_name"/>
+                    <EditText android:id="@+id/name"
+                              android:layout_width="wrap_content"
+                              android:layout_weight="1.0"
+                              android:layout_height="wrap_content"
+                              android:layout_marginLeft="10dip"/>
+             </LinearLayout>
+             <TextView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="@string/edit_ui_message"/>
+             <EditText android:id="@+id/message"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:lines="5"
+                       android:inputType="textCapSentences|textMultiLine"
+                       android:gravity="top"
+                       android:scrollbars="vertical"/>
+        </LinearLayout>
+        
+
+        <LinearLayout android:id="@+id/tab_recipients" android:orientation="vertical" android:layout_width="fill_parent"
+                      android:layout_height="wrap_content">
+            <Button android:id="@+id/browse"
+                        android:text="@string/edit_ui_browse"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dip"/>
+            <ListView android:id="@android:id/list"
+                      android:layout_width="fill_parent"
+                      android:layout_height="0dip"
+                      android:layout_weight="1.0"/>
+            <TextView android:id="@android:id/empty"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:text="@string/edit_ui_no_targets"/>
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent"
+                  android:layout_height="wrap_content" android:layout_gravity="bottom">
+        <Button android:id="@+id/cancel"
+                android:text="@string/ui_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"/>
+
+        <Button android:id="@+id/confirm"
+                android:text="@string/ui_confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"/>
+    </LinearLayout>
+
+</LinearLayout>
+</TabHost>

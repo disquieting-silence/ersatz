@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/new_riposte"
+          android:icon="@drawable/icon"
+          android:title="@string/main_option_add" />
+    <group android:id="@+id/selection">
+        <item android:id="@+id/enable_all"
+              android:title="@string/main_option_enable_all" />
+        <item android:id="@+id/disable_all"
+              android:title="@string/main_option_disable_all" />
+    </group>
+    <item android:id="@+id/settings"
+          android:title="@string/ersatz_settings"/>
+</menu>

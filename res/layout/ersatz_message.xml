@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/microcosm"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
+
+    <LinearLayout android:layout_width="match_parent" android:orientation="vertical"
+                  android:layout_height="wrap_content">
+
+        <!--FIX 26/01/2012 This will probably need to be moved -->
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@string/edit_ui_message"/>
+
+        <EditText android:id="@+id/message" android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:lines="5"
+                  android:gravity="top"
+                  android:scrollbars="vertical"/>
+
+    </LinearLayout>
+
+    <!--FIX 26/01/2012 This needs to be reused rather than just copied from riposte_edit. How to do this in Android? -->
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent"
+                  android:layout_height="fill_parent">
+        <Button android:id="@+id/cancel"
+                android:text="@string/ui_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"  android:layout_gravity="bottom"/>
+
+        <Button android:id="@+id/confirm"
+                android:text="@string/ui_confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"  android:layout_gravity="bottom"/>
+    </LinearLayout>
+
+</LinearLayout>

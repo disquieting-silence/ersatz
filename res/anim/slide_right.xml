@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Source: http://stackoverflow.com/questions/4807131/new-activity-in-android-enter-from-the-side -->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+     android:interpolator="@android:anim/accelerate_decelerate_interpolator">
+    <translate
+            android:fromXDelta="0"
+            android:toXDelta="100%p"
+            android:duration="500"
+            />
+</set>
