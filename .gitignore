@@ -1,7 +1,6 @@
 out
 ersatz.iws
 bin
-build.xml
 gen
 local.properties
 proguard.cfg
