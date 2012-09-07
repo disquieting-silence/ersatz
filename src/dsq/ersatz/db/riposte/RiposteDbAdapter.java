@@ -7,4 +7,5 @@ public interface RiposteDbAdapter extends DbAdapter {
     boolean update(long id, String name, String description);
     boolean update(long id, boolean enabled);
     boolean updateAll(boolean enabled);
+    boolean hasActive();
 }

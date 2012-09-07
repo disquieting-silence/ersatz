@@ -61,6 +61,14 @@ public class DefaultRiposteDbAdapter implements RiposteDbAdapter {
         return dbAccess.updateAll(db, TABLE, enabledValues(enabled));
     }
 
+    public boolean hasActive() {
+        // FIX 8/09/12 SQL Injection. Look into this properly.
+        final Cursor cursor = dbAccess.query(db, "SELECT * FROM " + TABLE + " WHERE ENABLED = " + boolToInt(true), new String[0]);
+        final boolean r = cursor.moveToFirst();
+        cursor.close();
+        return r;
+    }
+
     private ContentValues values(String name, String message) {
         ContentValues values = new ContentValues();
         values.put(NAME, name);

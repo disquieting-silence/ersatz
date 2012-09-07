@@ -25,6 +25,7 @@ public class MainFrame extends ListActivity {
     private final DbLifecycle lifecycle = new DefaultDbLifecycle();
     private SQLiteDatabase db;
     private RiposteDbAdapter adapter;
+    private final RiposteBroadcast broadcast = new DefaultRiposteBroadcast();
 
     // FIX 21/01/12 Rename me.
     private final Lists lists = new DefaultLists();
@@ -87,6 +88,7 @@ public class MainFrame extends ListActivity {
     private void setCheckboxes(boolean state) {
         adapter.updateAll(state);
         refreshList();
+        broadcast.send(this, state);
     }
 
     public boolean onContextItemSelected(MenuItem item) {

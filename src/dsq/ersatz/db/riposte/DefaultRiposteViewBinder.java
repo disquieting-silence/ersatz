@@ -1,5 +1,6 @@
 package dsq.ersatz.db.riposte;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.view.View;
 import android.widget.CheckBox;
@@ -8,6 +9,7 @@ import android.widget.CompoundButton;
 public class DefaultRiposteViewBinder implements RiposteViewBinder {
 
     private final RiposteDbAdapter adapter;
+    private final RiposteBroadcast broadcast = new DefaultRiposteBroadcast();
     
     private static final int NAME_COLUMN = 1;
     private static final int ENABLED_COLUMN = 3;
@@ -35,9 +37,12 @@ public class DefaultRiposteViewBinder implements RiposteViewBinder {
                 return false;
             }
         });
+
+        final Context context = view.getContext();
         view.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 adapter.update(id, b);
+                broadcast.send(context, adapter);
             }
         });
     }
