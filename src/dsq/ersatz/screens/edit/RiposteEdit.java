@@ -20,11 +20,13 @@ import dsq.ersatz.db.riposte.RiposteTable;
 import dsq.ersatz.requests.Requests;
 import dsq.ersatz.screens.main.MainFrame;
 import dsq.ersatz.screens.plant.Plant;
+import dsq.ersatz.ui.tab.DefaultTabs;
+import dsq.ersatz.ui.tab.TabInfo;
+import dsq.ersatz.ui.tab.Tabs;
 import dsq.thedroid.contacts.BasicContact;
 import dsq.thedroid.contacts.Contacts;
 import dsq.thedroid.contacts.DefaultContacts;
 import dsq.thedroid.contacts.NoPhoneNumberException;
-import dsq.thedroid.db.DbUtils;
 import dsq.thedroid.ui.*;
 import dsq.thedroid.util.*;
 import dsq.ersatz.db.riposte.DefaultRiposteDbAdapter;
@@ -32,6 +34,7 @@ import dsq.ersatz.db.riposte.RiposteDbAdapter;
 import dsq.ersatz.db.target.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class RiposteEdit extends ListActivity {
@@ -44,16 +47,18 @@ public class RiposteEdit extends ListActivity {
 
     private final Contacts contacts = new DefaultContacts();
     private final StateExtractor extractor = new DefaultStateExtractor();
-    private final IdCursor cursors = new DefaultIdCursor();
+
     private final TextInserter inserter = new DefaultTextInserter();
     
     private SQLiteDatabase db;
 
     private final Lists lists = new DefaultLists();
     private final Menus menus = new DefaultMenus();
+    private final FieldLookup lookup = new DefaultFieldLookup();
 
-    private EditText txtName;
-    private EditText txtMessage;
+    private EditUi ui;
+
+    private Tabs tabs = new DefaultTabs();
 
     private List<Target> originalTargets = new ArrayList<Target>();
 
@@ -68,17 +73,15 @@ public class RiposteEdit extends ListActivity {
 
         id = (Long) extractor.strict(RiposteTable.ID, savedInstanceState, getIntent());
 
-        txtName = (EditText) findViewById(R.id.name);
-        txtMessage = (EditText) findViewById(R.id.message);
-        
+        final EditText txtName = (EditText) findViewById(R.id.name);
+        final EditText txtMessage = (EditText) findViewById(R.id.message);
+        ui = new DefaultEditUi(txtName, txtMessage);
 
         originalTargets = targetAdapter.getTargets(id);
 
 
         setupTabs();
-        
-
-        populateFields();
+        lookup.load(this, riposteAdapter, ui, id);
         refreshList();
         registerForContextMenu(getListView());
 
@@ -88,19 +91,10 @@ public class RiposteEdit extends ListActivity {
     }
 
     private void setupTabs() {
-        TabHost tabHost=(TabHost)findViewById(R.id.tabHost);
-        tabHost.setup();
-
-        addTab(tabHost, R.id.tab_general, R.string.tab_general);
-        addTab(tabHost, R.id.tab_recipients, R.string.tab_recipients);
-    }
-
-    private void addTab(TabHost tabHost, int tabId, int labelId) {
-        String label = getString(labelId);
-        TabHost.TabSpec spec = tabHost.newTabSpec(label);
-        spec.setIndicator(label);
-        spec.setContent(tabId);
-        tabHost.addTab(spec);
+        tabs.install(this, R.id.tabHost, Arrays.asList(
+            new TabInfo(R.id.tab_general, R.string.tab_general),
+            new TabInfo(R.id.tab_recipients, R.string.tab_recipients)
+        ));
     }
 
     private void refreshList() {
@@ -186,10 +180,9 @@ public class RiposteEdit extends ListActivity {
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                String name = txtName.getText().toString();
-                String message = txtMessage.getText().toString();
-                Log.v("ERSATZ", "Saving message: " + message);
-                riposteAdapter.update(id, name, message);
+                final EditStruct values = ui.get();
+                Log.v("ERSATZ", "Saving message: " + values.message);
+                riposteAdapter.update(id, values.name, values.message);
                 finishWithResult(RESULT_OK);
             }
         });
@@ -224,17 +217,6 @@ public class RiposteEdit extends ListActivity {
             String template = data.getStringExtra(PlantTable.TEMPLATE);
             inserter.tryInsert(getCurrentFocus(), template);
         }
-    }
-
-    private void populateFields() {
-        cursors.go(riposteAdapter, this, id, new CursorOperation() {
-            public void go(long id, Cursor cursor) {
-                String name = DbUtils.getColumn(cursor, RiposteTable.NAME);
-                String message = DbUtils.getColumn(cursor, RiposteTable.MESSAGE);
-                txtName.setText(name);
-                txtMessage.setText(message);
-            }
-        });
     }
 
     protected void onSaveInstanceState(Bundle outState) {
