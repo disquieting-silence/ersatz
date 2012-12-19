@@ -4,7 +4,7 @@ import dsq.ersatz.R;
 import dsq.thedroid.ui.ComponentIndex;
 import dsq.thedroid.ui.ListMapping;
 
-public class TargetList implements ListMapping {
+public class TargetListMapping implements ListMapping {
 
     private final static String[] source = new String[]{
             TargetTable.PHONE_NUM,

@@ -3,7 +3,6 @@ package dsq.ersatz.screens.edit;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +19,9 @@ import dsq.ersatz.db.riposte.RiposteTable;
 import dsq.ersatz.requests.Requests;
 import dsq.ersatz.screens.main.MainFrame;
 import dsq.ersatz.screens.plant.Plant;
+import dsq.ersatz.ui.button.Buttons;
+import dsq.ersatz.ui.button.Click;
+import dsq.ersatz.ui.button.DefaultButtons;
 import dsq.ersatz.ui.tab.DefaultTabs;
 import dsq.ersatz.ui.tab.TabInfo;
 import dsq.ersatz.ui.tab.Tabs;
@@ -27,6 +29,7 @@ import dsq.thedroid.contacts.BasicContact;
 import dsq.thedroid.contacts.Contacts;
 import dsq.thedroid.contacts.DefaultContacts;
 import dsq.thedroid.contacts.NoPhoneNumberException;
+
 import dsq.thedroid.ui.*;
 import dsq.thedroid.util.*;
 import dsq.ersatz.db.riposte.DefaultRiposteDbAdapter;
@@ -43,7 +46,7 @@ public class RiposteEdit extends ListActivity {
     
     private final DbLifecycle lifecycle = new DefaultDbLifecycle();
     private RiposteDbAdapter riposteAdapter;
-    private TargetDbAdapter targetAdapter;
+    private TargetList targets;
 
     private final Contacts contacts = new DefaultContacts();
     private final StateExtractor extractor = new DefaultStateExtractor();
@@ -58,7 +61,9 @@ public class RiposteEdit extends ListActivity {
 
     private EditUi ui;
 
+    /* Might make these static */
     private Tabs tabs = new DefaultTabs();
+    private Buttons buttons = new DefaultButtons();
 
     private List<Target> originalTargets = new ArrayList<Target>();
 
@@ -69,20 +74,19 @@ public class RiposteEdit extends ListActivity {
 
         db = lifecycle.open(this);
         riposteAdapter = new DefaultRiposteDbAdapter(db);
-        targetAdapter = new DefaultTargetDbAdapter(db);
+
+
 
         id = (Long) extractor.strict(RiposteTable.ID, savedInstanceState, getIntent());
+        targets = new DefaultTargetList(this, db, new RiposteId(id));
 
         final EditText txtName = (EditText) findViewById(R.id.name);
         final EditText txtMessage = (EditText) findViewById(R.id.message);
         ui = new DefaultEditUi(txtName, txtMessage);
 
-        originalTargets = targetAdapter.getTargets(id);
-
-
         setupTabs();
         lookup.load(this, riposteAdapter, ui, id);
-        refreshList();
+        targets.refresh();
         registerForContextMenu(getListView());
 
         setupBrowse();
@@ -92,15 +96,9 @@ public class RiposteEdit extends ListActivity {
 
     private void setupTabs() {
         tabs.install(this, R.id.tabHost, Arrays.asList(
-            new TabInfo(R.id.tab_general, R.string.tab_general),
-            new TabInfo(R.id.tab_recipients, R.string.tab_recipients)
+                new TabInfo(R.id.tab_general, R.string.tab_general),
+                new TabInfo(R.id.tab_recipients, R.string.tab_recipients)
         ));
-    }
-
-    private void refreshList() {
-        SimpleCursorAdapter.ViewBinder view = new DefaultTargetViewBinder(targetAdapter);
-        Cursor cursor = targetAdapter.fetchByRiposteId(id);
-        lists.refresh(this, cursor, getListView(), new ComponentIndex(R.layout.target_row), new TargetList(), view);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -125,11 +123,9 @@ public class RiposteEdit extends ListActivity {
 
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        long id = info.id;
         switch (item.getItemId()) {
             case R.id.delete_target:
-                targetAdapter.deleteById(id);
-                refreshList();
+                targets.delete(new TargetId(info.id));
                 return true;
         }
         return super.onContextItemSelected(item);
@@ -142,9 +138,8 @@ public class RiposteEdit extends ListActivity {
     }
 
     private void setupCancel() {
-        Button cancelButton = (Button) findViewById(R.id.cancel);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
+        buttons.register(this, R.id.cancel, new Click() {
+            public void click(final View view) {
                 reject();
             }
         });
@@ -163,16 +158,8 @@ public class RiposteEdit extends ListActivity {
     }
 
     private void reject() {
-        revertTargets();
+        targets.revert();
         finishWithResult(RESULT_CANCELED);
-    }
-
-    private void revertTargets() {
-        boolean delSuccess = targetAdapter.deleteTargets(id);
-        for (Target orig : originalTargets) {
-            // FIX 24/01/12 Probably make the order of these arguments consistent.
-            targetAdapter.create(id, orig.number, orig.name);
-        }
     }
 
     private void setupConfirm() {
@@ -206,10 +193,7 @@ public class RiposteEdit extends ListActivity {
         if (reqCode == Requests.PICK_CONTACT_REQUEST && resultCode == Activity.RESULT_OK) {
             try {
                 BasicContact contact = contacts.process(this, data);
-                boolean isDuplicate = targetAdapter.contains(id, contact.number);
-                if (!isDuplicate) {
-                    targetAdapter.create(id, contact.number, contact.name);
-                } 
+                targets.update(contact);
             } catch (NoPhoneNumberException e) {
                 Log.v("ERSATZ", "Phone number not found in contact.");
             } 
