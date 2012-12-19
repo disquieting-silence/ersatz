@@ -2,21 +2,14 @@ package dsq.ersatz.screens.edit;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.view.View;
-import dsq.ersatz.requests.Requests;
 import dsq.ersatz.screens.main.MainFrame;
 import dsq.ersatz.util.DefaultFinish;
 import dsq.ersatz.util.Finish;
 import dsq.thedroid.contacts.BasicContact;
-import dsq.thedroid.contacts.Contacts;
-import dsq.thedroid.contacts.DefaultContacts;
-import dsq.thedroid.ui.DefaultTextInserter;
-import dsq.thedroid.ui.TextInserter;
 
 public class DefaultActions implements Actions {
 
     private final Finish finish = new DefaultFinish();
-    private final TextInserter inserter = new DefaultTextInserter();
 
 
     private final Activity activity;
@@ -25,6 +18,7 @@ public class DefaultActions implements Actions {
     private final RiposteId id;
 
     private final ContactActions contacts;
+    private final TemplateActions templates;
 
     public DefaultActions(final Activity activity, final RiposteTy ripostes, final TargetList targets, final RiposteId id) {
         this.activity = activity;
@@ -33,6 +27,7 @@ public class DefaultActions implements Actions {
         this.id = id;
 
         contacts = new DefaultContactActions(activity, targets);
+        templates = new DefaultTemplateActions(activity);
     }
 
     public void confirm() {
@@ -50,9 +45,20 @@ public class DefaultActions implements Actions {
         contacts.browse();
     }
 
+    public void delete(final TargetId id) {
+        targets.delete(id);
+    }
+
     public void insertText(final String text) {
-        final View view = activity.getCurrentFocus();
-        inserter.tryInsert(view, text);
+        templates.insertText(text);
+    }
+
+    public void insertTemplate(final Intent template) {
+        templates.insertTemplate(template);
+    }
+
+    public void showTemplates() {
+        templates.showTemplates();
     }
 
     public void addContact(final BasicContact contact) {

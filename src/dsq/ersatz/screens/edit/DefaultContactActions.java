@@ -37,4 +37,8 @@ public class DefaultContactActions implements ContactActions {
     public void browse() {
         contacts.browse(activity, Requests.PICK_CONTACT_REQUEST);
     }
+
+    public void delete(final TargetId id) {
+        targets.delete(id);
+    }
 }

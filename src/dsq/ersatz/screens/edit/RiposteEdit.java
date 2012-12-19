@@ -101,7 +101,7 @@ public class RiposteEdit extends ListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.insert_plant:
-                startActivityForResult(new Intent(this, Plant.class), Requests.INSERT_TEMPLATE_REQUEST);
+                actions.showTemplates();
                 return true;
         }
 
@@ -112,7 +112,7 @@ public class RiposteEdit extends ListActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.delete_target:
-                targets.delete(new TargetId(info.id));
+                actions.delete(new TargetId(info.id));
                 return true;
         }
         return super.onContextItemSelected(item);
@@ -158,8 +158,7 @@ public class RiposteEdit extends ListActivity {
         if (reqCode == Requests.PICK_CONTACT_REQUEST && resultCode == Activity.RESULT_OK) {
             actions.addContact(data);
         } else if (reqCode == Requests.INSERT_TEMPLATE_REQUEST && resultCode == Activity.RESULT_OK) {
-            String template = data.getStringExtra(PlantTable.TEMPLATE);
-            actions.insertText(template);
+            actions.insertTemplate(data);
         }
     }
 
