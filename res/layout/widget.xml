@@ -4,7 +4,8 @@
               android:id="@+id/widget_container"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:background="@color/shaded">
+              android:background="@color/shaded"
+              android:visibility="gone">
     <TextView android:id="@+id/widget_text"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
