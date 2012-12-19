@@ -1,7 +1,9 @@
 package dsq.ersatz.screens.edit;
 
-public interface Actions {
+import dsq.thedroid.contacts.BasicContact;
+
+public interface Actions extends ContactActions {
     void confirm();
     void revert();
-    void browse();
+    void insertText(String text);
 }

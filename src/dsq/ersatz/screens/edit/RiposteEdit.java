@@ -48,7 +48,7 @@ public class RiposteEdit extends ListActivity {
     private final Contacts contacts = new DefaultContacts();
     private final StateExtractor extractor = new DefaultStateExtractor();
 
-    private final TextInserter inserter = new DefaultTextInserter();
+
     
     private SQLiteDatabase db;
 
@@ -148,7 +148,7 @@ public class RiposteEdit extends ListActivity {
         Button browseButton = (Button) findViewById(R.id.browse);
         browseButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                contacts.browse(RiposteEdit.this, Requests.PICK_CONTACT_REQUEST);
+                actions.browse();
             }
         });
     }
@@ -156,15 +156,10 @@ public class RiposteEdit extends ListActivity {
     public void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
         if (reqCode == Requests.PICK_CONTACT_REQUEST && resultCode == Activity.RESULT_OK) {
-            try {
-                BasicContact contact = contacts.process(this, data);
-                targets.update(contact);
-            } catch (NoPhoneNumberException e) {
-                Log.v("ERSATZ", "Phone number not found in contact.");
-            } 
+            actions.addContact(data);
         } else if (reqCode == Requests.INSERT_TEMPLATE_REQUEST && resultCode == Activity.RESULT_OK) {
             String template = data.getStringExtra(PlantTable.TEMPLATE);
-            inserter.tryInsert(getCurrentFocus(), template);
+            actions.insertText(template);
         }
     }
 
