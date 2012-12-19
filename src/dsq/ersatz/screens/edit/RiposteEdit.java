@@ -1,6 +1,5 @@
 package dsq.ersatz.screens.edit;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,7 +8,6 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import dsq.ersatz.R;
 import dsq.ersatz.db.general.DbLifecycle;
 import dsq.ersatz.db.general.DefaultDbLifecycle;
@@ -18,13 +16,16 @@ import dsq.ersatz.requests.Requests;
 import dsq.ersatz.screens.edit.action.*;
 import dsq.ersatz.screens.edit.data.RiposteId;
 import dsq.ersatz.ui.button.Buttons;
-import dsq.ersatz.ui.button.Click;
 import dsq.ersatz.ui.button.DefaultButtons;
+import dsq.ersatz.ui.context.Contexts;
+import dsq.ersatz.ui.context.DefaultContexts;
+import dsq.ersatz.ui.option.DefaultOptions;
+import dsq.ersatz.ui.option.Options;
+import dsq.ersatz.ui.response.DefaultResponses;
+import dsq.ersatz.ui.response.Responses;
 import dsq.ersatz.ui.tab.DefaultTabs;
 import dsq.ersatz.ui.tab.TabInfo;
 import dsq.ersatz.ui.tab.Tabs;
-import dsq.thedroid.ui.DefaultMenus;
-import dsq.thedroid.ui.Menus;
 import dsq.thedroid.util.DefaultStateExtractor;
 import dsq.thedroid.util.StateExtractor;
 
@@ -40,16 +41,13 @@ public class RiposteEdit extends ListActivity {
     private final StateExtractor extractor = new DefaultStateExtractor();
     private SQLiteDatabase db;
 
-    private final Menus menus = new DefaultMenus();
-
     /* Might make these static */
     private Tabs tabs = new DefaultTabs();
-    private Buttons buttons = new DefaultButtons();
 
-    private Map<Integer, IdAction> context = new HashMap<Integer, IdAction>();
-
-    private Map<Integer, SimpleAction> option = new HashMap<Integer, SimpleAction>();
-    private Map<Integer, IntentAction> response = new HashMap<Integer, IntentAction>();
+    private Buttons buttons;
+    private Options options;
+    private Contexts contexts;
+    private Responses responses;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,29 +68,39 @@ public class RiposteEdit extends ListActivity {
         setupTabs();
         registerForContextMenu(getListView());
 
-        context.put(R.id.delete_target, actions.deleteTarget());
-        option.put(R.id.insert_plant, actions.showTemplates());
+        options = setupOptions();
+        contexts = setupContexts();
+        responses = setupResponses();
+        buttons = setupButtons();
 
-        response.put(Requests.PICK_CONTACT_REQUEST, actions.addContact());
-        response.put(Requests.INSERT_TEMPLATE_REQUEST, actions.insertTemplate());
-
-        setupButtons();
+        buttons.register();
     }
 
-    private void setupButtons() {
+    private Responses setupResponses() {
+        final Map<Integer, IntentAction> mapping = new HashMap<Integer, IntentAction>();
+        mapping.put(Requests.PICK_CONTACT_REQUEST, actions.addContact());
+        mapping.put(Requests.INSERT_TEMPLATE_REQUEST, actions.insertTemplate());
+        return new DefaultResponses(this, mapping);
+    }
+
+    private Options setupOptions() {
+        final Map<Integer, SimpleAction> mapping = new HashMap<Integer, SimpleAction>();
+        mapping.put(R.id.insert_plant, actions.showTemplates());
+        return new DefaultOptions(this, mapping);
+    }
+
+    private Contexts setupContexts() {
+        final Map<Integer, IdAction> mapping = new HashMap<Integer, IdAction>();
+        mapping.put(R.id.delete_target, actions.deleteTarget());
+        return new DefaultContexts(this, mapping);
+    }
+
+    private Buttons setupButtons() {
         final Map<Integer, SimpleAction> commands = new HashMap<Integer, SimpleAction>();
         commands.put(R.id.cancel, actions.revert());
         commands.put(R.id.confirm, actions.confirm());
         commands.put(R.id.browse, actions.browse());
-
-        for (final Integer buttonId : commands.keySet()) {
-            buttons.register(this, buttonId, new Click() {
-                public void click(final View view) {
-                    final SimpleAction runner = commands.get(buttonId);
-                    runner.run();
-                }
-            });
-        }
+        return new DefaultButtons(this, commands);
     }
 
     private void setupTabs() {
@@ -103,33 +111,22 @@ public class RiposteEdit extends ListActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        // FIX 21/01/12 Should this call super?
-        return menus.options(this, menu, R.menu.edit);
+        return options.onCreate(menu, R.menu.edit);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final boolean result = options.onClick(item);
+        return result ? result : super.onOptionsItemSelected(item);
     }
 
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menus.context(this, menu, R.menu.edit_context);
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        final SimpleAction action = option.get(item.getItemId());
-        if (action != null) {
-            action.run();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        contexts.onCreate(menu, R.menu.edit_context);
     }
 
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        final IdAction action = context.get(item.getItemId());
-        if (action != null) {
-            action.run(info.id);
-            return true;
-        }
-        return super.onContextItemSelected(item);
+        final boolean result = contexts.onClick(item);
+        return result ? result : super.onContextItemSelected(item);
     }
 
     @Override
@@ -145,10 +142,7 @@ public class RiposteEdit extends ListActivity {
 
     public void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            final IntentAction action = response.get(reqCode);
-            if (action != null) action.run(data);
-        }
+        responses.onResult(reqCode, resultCode, data);
     }
 
     protected void onSaveInstanceState(Bundle outState) {
