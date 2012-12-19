@@ -63,7 +63,6 @@ public class MainFrame extends ListActivity {
         return new DefaultContexts(this, mapping);
     }
 
-
     private Options setupOptions() {
         final Map<Integer, SimpleAction> mapping = new HashMap<Integer, SimpleAction>();
         mapping.put(R.id.new_riposte, actions.launchAdd());
@@ -74,7 +73,7 @@ public class MainFrame extends ListActivity {
     private Responses setupResponses() {
         final Map<Integer, IntentAction> failure = new HashMap<Integer, IntentAction>();
         failure.put(Requests.ADD_RIPOSTE_REQUEST, actions.cancel());
-        final HashMap<Integer, IntentAction> success = new HashMap<Integer, IntentAction>();
+        final Map<Integer, IntentAction> success = new HashMap<Integer, IntentAction>();
         return new DefaultResponses(success, failure);
     }
 
