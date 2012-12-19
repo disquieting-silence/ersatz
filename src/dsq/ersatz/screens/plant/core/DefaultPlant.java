@@ -17,15 +17,13 @@ public class DefaultPlant implements Plant {
     private final PlantUi ui;
     private final Activity activity;
     private final PlantDbAdapter adapter;
+    private final Spinners spinners = new DefaultSpinners();
 
     public DefaultPlant(final Activity activity, final SQLiteDatabase db) {
         this.activity = activity;
         adapter = new DefaultPlantDbAdapter(db);
         ui = setupUi();
-
     }
-
-    private final Spinners spinners = new DefaultSpinners();
 
     private PlantUi setupUi() {
         final Spinner spinner = spinners.keyValue(activity, R.id.plant_spinner, PlantTable.TAG, PlantTable.TEMPLATE, adapter, new SpinnerListener() {
