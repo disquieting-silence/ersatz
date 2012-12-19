@@ -45,8 +45,9 @@ public class RiposteEdit extends ListActivity {
     private Long id;
     
     private final DbLifecycle lifecycle = new DefaultDbLifecycle();
-    private RiposteDbAdapter riposteAdapter;
+
     private TargetList targets;
+    private RiposteTy ripostes;
 
     private final Contacts contacts = new DefaultContacts();
     private final StateExtractor extractor = new DefaultStateExtractor();
@@ -55,17 +56,11 @@ public class RiposteEdit extends ListActivity {
     
     private SQLiteDatabase db;
 
-    private final Lists lists = new DefaultLists();
     private final Menus menus = new DefaultMenus();
-    private final FieldLookup lookup = new DefaultFieldLookup();
-
-    private EditUi ui;
 
     /* Might make these static */
     private Tabs tabs = new DefaultTabs();
     private Buttons buttons = new DefaultButtons();
-
-    private List<Target> originalTargets = new ArrayList<Target>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,19 +68,15 @@ public class RiposteEdit extends ListActivity {
         setTitle(R.string.edit_ui_title);
 
         db = lifecycle.open(this);
-        riposteAdapter = new DefaultRiposteDbAdapter(db);
 
+        final long rawId = (Long) extractor.strict(RiposteTable.ID, savedInstanceState, getIntent());
+        final RiposteId id = new RiposteId(rawId);
+        targets = new DefaultTargetList(this, db, id);
+        ripostes = new DefaultRiposteTy(this, db, id);
 
-
-        id = (Long) extractor.strict(RiposteTable.ID, savedInstanceState, getIntent());
-        targets = new DefaultTargetList(this, db, new RiposteId(id));
-
-        final EditText txtName = (EditText) findViewById(R.id.name);
-        final EditText txtMessage = (EditText) findViewById(R.id.message);
-        ui = new DefaultEditUi(txtName, txtMessage);
 
         setupTabs();
-        lookup.load(this, riposteAdapter, ui, id);
+        ripostes.readFromDb();
         targets.refresh();
         registerForContextMenu(getListView());
 
@@ -163,13 +154,9 @@ public class RiposteEdit extends ListActivity {
     }
 
     private void setupConfirm() {
-        Button confirmButton = (Button) findViewById(R.id.confirm);
-
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                final EditStruct values = ui.get();
-                Log.v("ERSATZ", "Saving message: " + values.message);
-                riposteAdapter.update(id, values.name, values.message);
+        buttons.register(this, R.id.confirm, new Click() {
+            public void click(final View view) {
+                ripostes.writeToDb();
                 finishWithResult(RESULT_OK);
             }
         });
@@ -207,5 +194,4 @@ public class RiposteEdit extends ListActivity {
         super.onSaveInstanceState(outState);
         outState.putSerializable(RiposteTable.ID, id);
     }
-
 }
