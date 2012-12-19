@@ -32,13 +32,8 @@ import dsq.thedroid.contacts.NoPhoneNumberException;
 
 import dsq.thedroid.ui.*;
 import dsq.thedroid.util.*;
-import dsq.ersatz.db.riposte.DefaultRiposteDbAdapter;
-import dsq.ersatz.db.riposte.RiposteDbAdapter;
-import dsq.ersatz.db.target.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class RiposteEdit extends ListActivity {
 
@@ -48,6 +43,7 @@ public class RiposteEdit extends ListActivity {
 
     private TargetList targets;
     private RiposteTy ripostes;
+    private Actions actions;
 
     private final Contacts contacts = new DefaultContacts();
     private final StateExtractor extractor = new DefaultStateExtractor();
@@ -73,7 +69,7 @@ public class RiposteEdit extends ListActivity {
         final RiposteId id = new RiposteId(rawId);
         targets = new DefaultTargetList(this, db, id);
         ripostes = new DefaultRiposteTy(this, db, id);
-
+        actions = new DefaultActions(this, ripostes, targets, id);
 
         setupTabs();
         ripostes.readFromDb();
@@ -87,8 +83,8 @@ public class RiposteEdit extends ListActivity {
 
     private void setupTabs() {
         tabs.install(this, R.id.tabHost, Arrays.asList(
-                new TabInfo(R.id.tab_general, R.string.tab_general),
-                new TabInfo(R.id.tab_recipients, R.string.tab_recipients)
+            new TabInfo(R.id.tab_general, R.string.tab_general),
+            new TabInfo(R.id.tab_recipients, R.string.tab_recipients)
         ));
     }
 
@@ -131,33 +127,19 @@ public class RiposteEdit extends ListActivity {
     private void setupCancel() {
         buttons.register(this, R.id.cancel, new Click() {
             public void click(final View view) {
-                reject();
+                actions.revert();
             }
         });
     }
 
-    private void finishWithResult(int result) {
-        Intent intent = new Intent(this, MainFrame.class);
-        // FIX 24/01/12 Use constants for these intent keys.
-        intent.putExtra("id", id);
-        setResult(result, intent);
-        finish();
-    }
-
     public void onBackPressed() {
-        reject();
-    }
-
-    private void reject() {
-        targets.revert();
-        finishWithResult(RESULT_CANCELED);
+        actions.revert();
     }
 
     private void setupConfirm() {
         buttons.register(this, R.id.confirm, new Click() {
             public void click(final View view) {
-                ripostes.writeToDb();
-                finishWithResult(RESULT_OK);
+                actions.confirm();
             }
         });
     }
@@ -166,13 +148,9 @@ public class RiposteEdit extends ListActivity {
         Button browseButton = (Button) findViewById(R.id.browse);
         browseButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                browseContacts();
+                contacts.browse(RiposteEdit.this, Requests.PICK_CONTACT_REQUEST);
             }
         });
-    }
-
-    private void browseContacts() {
-        contacts.browse(this, Requests.PICK_CONTACT_REQUEST);
     }
 
     public void onActivityResult(int reqCode, int resultCode, Intent data) {
