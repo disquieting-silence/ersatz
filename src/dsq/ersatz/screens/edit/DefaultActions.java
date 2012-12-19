@@ -2,6 +2,8 @@ package dsq.ersatz.screens.edit;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
+import dsq.ersatz.db.riposte.RiposteTable;
 import dsq.ersatz.screens.main.MainFrame;
 import dsq.ersatz.util.DefaultFinish;
 import dsq.ersatz.util.Finish;
@@ -47,6 +49,19 @@ public class DefaultActions implements Actions {
 
     public void delete(final TargetId id) {
         targets.delete(id);
+    }
+
+    public void refreshTargets() {
+        targets.refresh();
+    }
+
+    public void refreshRiposte() {
+        ripostes.readFromDb();
+        targets.refresh();
+    }
+
+    public void backup(final Bundle outState) {
+        outState.putSerializable(RiposteTable.ID, id.value);
     }
 
     public void insertText(final String text) {

@@ -5,51 +5,37 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
 import dsq.ersatz.R;
 import dsq.ersatz.db.general.DbLifecycle;
 import dsq.ersatz.db.general.DefaultDbLifecycle;
-import dsq.ersatz.db.plant.PlantTable;
 import dsq.ersatz.db.riposte.RiposteTable;
 import dsq.ersatz.requests.Requests;
-import dsq.ersatz.screens.main.MainFrame;
-import dsq.ersatz.screens.plant.Plant;
 import dsq.ersatz.ui.button.Buttons;
 import dsq.ersatz.ui.button.Click;
 import dsq.ersatz.ui.button.DefaultButtons;
 import dsq.ersatz.ui.tab.DefaultTabs;
 import dsq.ersatz.ui.tab.TabInfo;
 import dsq.ersatz.ui.tab.Tabs;
-import dsq.thedroid.contacts.BasicContact;
-import dsq.thedroid.contacts.Contacts;
-import dsq.thedroid.contacts.DefaultContacts;
-import dsq.thedroid.contacts.NoPhoneNumberException;
-
-import dsq.thedroid.ui.*;
-import dsq.thedroid.util.*;
+import dsq.thedroid.ui.DefaultMenus;
+import dsq.thedroid.ui.Menus;
+import dsq.thedroid.util.DefaultStateExtractor;
+import dsq.thedroid.util.StateExtractor;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RiposteEdit extends ListActivity {
 
-    private Long id;
-    
     private final DbLifecycle lifecycle = new DefaultDbLifecycle();
+    private UiActions actions;
 
-    private TargetList targets;
-    private RiposteTy ripostes;
-    private Actions actions;
-
-    private final Contacts contacts = new DefaultContacts();
     private final StateExtractor extractor = new DefaultStateExtractor();
-
-
-    
     private SQLiteDatabase db;
 
     private final Menus menus = new DefaultMenus();
@@ -57,6 +43,11 @@ public class RiposteEdit extends ListActivity {
     /* Might make these static */
     private Tabs tabs = new DefaultTabs();
     private Buttons buttons = new DefaultButtons();
+
+    private Map<Integer, IdAction> context = new HashMap<Integer, IdAction>();
+
+    private Map<Integer, SimpleAction> option = new HashMap<Integer, SimpleAction>();
+    private Map<Integer, IntentAction> response = new HashMap<Integer, IntentAction>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,18 +58,39 @@ public class RiposteEdit extends ListActivity {
 
         final long rawId = (Long) extractor.strict(RiposteTable.ID, savedInstanceState, getIntent());
         final RiposteId id = new RiposteId(rawId);
-        targets = new DefaultTargetList(this, db, id);
-        ripostes = new DefaultRiposteTy(this, db, id);
-        actions = new DefaultActions(this, ripostes, targets, id);
+
+        final ActionFactory factory = new DefaultActionFactory();
+        actions = factory.nu(this, db, id);
+
+        final SimpleAction load = actions.refreshRiposte();
+        load.run();
 
         setupTabs();
-        ripostes.readFromDb();
-        targets.refresh();
         registerForContextMenu(getListView());
 
-        setupBrowse();
-        setupConfirm();
-        setupCancel();
+        context.put(R.id.delete_target, actions.deleteTarget());
+        option.put(R.id.insert_plant, actions.showTemplates());
+
+        response.put(Requests.PICK_CONTACT_REQUEST, actions.addContact());
+        response.put(Requests.INSERT_TEMPLATE_REQUEST, actions.insertTemplate());
+
+        setupButtons();
+    }
+
+    private void setupButtons() {
+        final Map<Integer, SimpleAction> commands = new HashMap<Integer, SimpleAction>();
+        commands.put(R.id.cancel, actions.revert());
+        commands.put(R.id.confirm, actions.confirm());
+        commands.put(R.id.browse, actions.browse());
+
+        for (final Integer buttonId : commands.keySet()) {
+            buttons.register(this, buttonId, new Click() {
+                public void click(final View view) {
+                    final SimpleAction runner = commands.get(buttonId);
+                    runner.run();
+                }
+            });
+        }
     }
 
     private void setupTabs() {
@@ -99,10 +111,10 @@ public class RiposteEdit extends ListActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.insert_plant:
-                actions.showTemplates();
-                return true;
+        final SimpleAction action = option.get(item.getItemId());
+        if (action != null) {
+            action.run();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -110,10 +122,10 @@ public class RiposteEdit extends ListActivity {
 
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        switch (item.getItemId()) {
-            case R.id.delete_target:
-                actions.delete(new TargetId(info.id));
-                return true;
+        final IdAction action = context.get(item.getItemId());
+        if (action != null) {
+            action.run(info.id);
+            return true;
         }
         return super.onContextItemSelected(item);
     }
@@ -124,46 +136,21 @@ public class RiposteEdit extends ListActivity {
         super.onDestroy();
     }
 
-    private void setupCancel() {
-        buttons.register(this, R.id.cancel, new Click() {
-            public void click(final View view) {
-                actions.revert();
-            }
-        });
-    }
 
     public void onBackPressed() {
         actions.revert();
     }
 
-    private void setupConfirm() {
-        buttons.register(this, R.id.confirm, new Click() {
-            public void click(final View view) {
-                actions.confirm();
-            }
-        });
-    }
-
-    private void setupBrowse() {
-        Button browseButton = (Button) findViewById(R.id.browse);
-        browseButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                actions.browse();
-            }
-        });
-    }
-
     public void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
-        if (reqCode == Requests.PICK_CONTACT_REQUEST && resultCode == Activity.RESULT_OK) {
-            actions.addContact(data);
-        } else if (reqCode == Requests.INSERT_TEMPLATE_REQUEST && resultCode == Activity.RESULT_OK) {
-            actions.insertTemplate(data);
+        if (resultCode == Activity.RESULT_OK) {
+            final IntentAction action = response.get(reqCode);
+            if (action != null) action.run(data);
         }
     }
 
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(RiposteTable.ID, id);
+        actions.backup(outState);
     }
 }
