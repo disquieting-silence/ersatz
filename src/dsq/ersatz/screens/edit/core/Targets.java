@@ -1,6 +1,6 @@
 package dsq.ersatz.screens.edit.core;
 
-import dsq.ersatz.screens.edit.data.TargetId;
+import dsq.ersatz.data.data.TargetId;
 import dsq.thedroid.contacts.BasicContact;
 
 public interface Targets {

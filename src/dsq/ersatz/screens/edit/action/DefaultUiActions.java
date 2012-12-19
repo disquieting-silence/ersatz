@@ -2,7 +2,10 @@ package dsq.ersatz.screens.edit.action;
 
 import android.content.Intent;
 import android.os.Bundle;
-import dsq.ersatz.screens.edit.data.TargetId;
+import dsq.ersatz.action.IdAction;
+import dsq.ersatz.action.IntentAction;
+import dsq.ersatz.action.SimpleAction;
+import dsq.ersatz.data.data.TargetId;
 
 public class DefaultUiActions implements UiActions {
 

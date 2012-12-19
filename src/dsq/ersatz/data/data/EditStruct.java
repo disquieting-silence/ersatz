@@ -1,4 +1,4 @@
-package dsq.ersatz.screens.edit.data;
+package dsq.ersatz.data.data;
 
 public class EditStruct {
     public final String name;

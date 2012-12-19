@@ -3,7 +3,7 @@ package dsq.ersatz.ui.button;
 import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
-import dsq.ersatz.screens.edit.action.SimpleAction;
+import dsq.ersatz.action.SimpleAction;
 
 import java.util.HashMap;
 import java.util.Map;

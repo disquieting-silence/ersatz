@@ -3,11 +3,11 @@ package dsq.ersatz.screens.edit.action;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import dsq.ersatz.data.data.RiposteId;
+import dsq.ersatz.data.data.TargetId;
 import dsq.ersatz.db.riposte.RiposteTable;
-import dsq.ersatz.screens.edit.core.Ripostes;
+import dsq.ersatz.screens.edit.core.Riposte;
 import dsq.ersatz.screens.edit.core.Targets;
-import dsq.ersatz.screens.edit.data.RiposteId;
-import dsq.ersatz.screens.edit.data.TargetId;
 import dsq.ersatz.screens.main.MainFrame;
 import dsq.ersatz.util.DefaultFinish;
 import dsq.ersatz.util.Finish;
@@ -19,16 +19,16 @@ public class DefaultActions implements Actions {
 
 
     private final Activity activity;
-    private final Ripostes ripostes;
+    private final Riposte riposte;
     private final Targets targets;
     private final RiposteId id;
 
     private final ContactActions contacts;
     private final TemplateActions templates;
 
-    public DefaultActions(final Activity activity, final Ripostes ripostes, final Targets targets, final RiposteId id) {
+    public DefaultActions(final Activity activity, final Riposte riposte, final Targets targets, final RiposteId id) {
         this.activity = activity;
-        this.ripostes = ripostes;
+        this.riposte = riposte;
         this.targets = targets;
         this.id = id;
 
@@ -37,7 +37,7 @@ public class DefaultActions implements Actions {
     }
 
     public void confirm() {
-        ripostes.writeToDb();
+        riposte.writeToDb();
         finishWithResult(Activity.RESULT_OK);
     }
 
@@ -60,7 +60,7 @@ public class DefaultActions implements Actions {
     }
 
     public void refreshRiposte() {
-        ripostes.readFromDb();
+        riposte.readFromDb();
         targets.refresh();
     }
 

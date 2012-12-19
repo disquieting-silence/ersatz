@@ -9,12 +9,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import dsq.ersatz.R;
+import dsq.ersatz.action.IdAction;
+import dsq.ersatz.action.IntentAction;
+import dsq.ersatz.action.SimpleAction;
+import dsq.ersatz.data.data.RiposteId;
 import dsq.ersatz.db.general.DbLifecycle;
 import dsq.ersatz.db.general.DefaultDbLifecycle;
 import dsq.ersatz.db.riposte.RiposteTable;
 import dsq.ersatz.requests.Requests;
 import dsq.ersatz.screens.edit.action.*;
-import dsq.ersatz.screens.edit.data.RiposteId;
 import dsq.ersatz.ui.button.Buttons;
 import dsq.ersatz.ui.button.DefaultButtons;
 import dsq.ersatz.ui.context.Contexts;
@@ -77,10 +80,11 @@ public class RiposteEdit extends ListActivity {
     }
 
     private Responses setupResponses() {
-        final Map<Integer, IntentAction> mapping = new HashMap<Integer, IntentAction>();
-        mapping.put(Requests.PICK_CONTACT_REQUEST, actions.addContact());
-        mapping.put(Requests.INSERT_TEMPLATE_REQUEST, actions.insertTemplate());
-        return new DefaultResponses(this, mapping);
+        final Map<Integer, IntentAction> success = new HashMap<Integer, IntentAction>();
+        success.put(Requests.PICK_CONTACT_REQUEST, actions.addContact());
+        success.put(Requests.INSERT_TEMPLATE_REQUEST, actions.insertTemplate());
+        final Map<Integer, IntentAction> failure = new HashMap<Integer, IntentAction>();
+        return new DefaultResponses(success, failure);
     }
 
     private Options setupOptions() {
@@ -134,7 +138,6 @@ public class RiposteEdit extends ListActivity {
         lifecycle.close();
         super.onDestroy();
     }
-
 
     public void onBackPressed() {
         actions.revert();
