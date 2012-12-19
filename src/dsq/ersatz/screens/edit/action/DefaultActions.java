@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import dsq.ersatz.db.riposte.RiposteTable;
-import dsq.ersatz.screens.edit.core.RiposteTy;
-import dsq.ersatz.screens.edit.core.TargetList;
+import dsq.ersatz.screens.edit.core.Ripostes;
+import dsq.ersatz.screens.edit.core.Targets;
 import dsq.ersatz.screens.edit.data.RiposteId;
 import dsq.ersatz.screens.edit.data.TargetId;
 import dsq.ersatz.screens.main.MainFrame;
@@ -19,14 +19,14 @@ public class DefaultActions implements Actions {
 
 
     private final Activity activity;
-    private final RiposteTy ripostes;
-    private final TargetList targets;
+    private final Ripostes ripostes;
+    private final Targets targets;
     private final RiposteId id;
 
     private final ContactActions contacts;
     private final TemplateActions templates;
 
-    public DefaultActions(final Activity activity, final RiposteTy ripostes, final TargetList targets, final RiposteId id) {
+    public DefaultActions(final Activity activity, final Ripostes ripostes, final Targets targets, final RiposteId id) {
         this.activity = activity;
         this.ripostes = ripostes;
         this.targets = targets;

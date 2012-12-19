@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import dsq.ersatz.requests.Requests;
-import dsq.ersatz.screens.edit.core.TargetList;
+import dsq.ersatz.screens.edit.core.Targets;
 import dsq.ersatz.screens.edit.data.TargetId;
 import dsq.thedroid.contacts.BasicContact;
 import dsq.thedroid.contacts.Contacts;
@@ -16,9 +16,9 @@ public class DefaultContactActions implements ContactActions {
     private final Contacts contacts = new DefaultContacts();
 
     private final Activity activity;
-    private final TargetList targets;
+    private final Targets targets;
 
-    public DefaultContactActions(final Activity activity, final TargetList targets) {
+    public DefaultContactActions(final Activity activity, final Targets targets) {
         this.activity = activity;
         this.targets = targets;
     }

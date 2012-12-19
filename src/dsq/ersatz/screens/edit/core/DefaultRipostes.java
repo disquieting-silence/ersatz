@@ -16,7 +16,7 @@ import dsq.thedroid.util.CursorOperation;
 import dsq.thedroid.util.DefaultIdCursor;
 import dsq.thedroid.util.IdCursor;
 
-public class DefaultRiposteTy implements RiposteTy {
+public class DefaultRipostes implements Ripostes {
 
     private final Activity activity;
     private final RiposteDbAdapter adapter;
@@ -25,7 +25,7 @@ public class DefaultRiposteTy implements RiposteTy {
 
     private final IdCursor cursors = new DefaultIdCursor();
 
-    public DefaultRiposteTy(final Activity activity, final SQLiteDatabase db, final RiposteId id) {
+    public DefaultRipostes(final Activity activity, final SQLiteDatabase db, final RiposteId id) {
         this.activity = activity;
         this.id = id;
         adapter = new DefaultRiposteDbAdapter(db);

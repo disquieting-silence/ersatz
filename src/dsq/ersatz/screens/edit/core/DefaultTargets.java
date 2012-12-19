@@ -16,7 +16,7 @@ import dsq.thedroid.ui.Lists;
 
 import java.util.List;
 
-public class DefaultTargetList implements TargetList {
+public class DefaultTargets implements Targets {
     private final TargetDbAdapter adapter;
     private final List<Target> original;
     private final RiposteId id;
@@ -24,7 +24,7 @@ public class DefaultTargetList implements TargetList {
     private final Lists lists = new DefaultLists();
     private final ListActivity activity;
 
-    public DefaultTargetList(final ListActivity activity, final SQLiteDatabase db, final RiposteId id) {
+    public DefaultTargets(final ListActivity activity, final SQLiteDatabase db, final RiposteId id) {
         this.activity = activity;
         adapter = new DefaultTargetDbAdapter(db);
         this.id = id;
