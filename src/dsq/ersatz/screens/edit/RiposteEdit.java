@@ -109,8 +109,8 @@ public class RiposteEdit extends ListActivity {
 
     private void setupTabs() {
         tabs.install(this, R.id.tabHost, Arrays.asList(
-            new TabInfo(R.id.tab_general, R.string.tab_general),
-            new TabInfo(R.id.tab_recipients, R.string.tab_recipients)
+            new TabInfo(R.string.tab_general, R.id.tab_general),
+            new TabInfo(R.string.tab_recipients, R.id.tab_recipients)
         ));
     }
 

@@ -10,6 +10,7 @@ public class DefaultActionFactory implements ActionFactory {
         final Ripostes ripostes = new DefaultRipostes(activity, db);
         final Actions actions = new DefaultActions(activity, ripostes);
         ripostes.refresh();
+        ripostes.broadcast();
         return new DefaultUiActions(actions);
     }
 }

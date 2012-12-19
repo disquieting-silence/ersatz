@@ -6,10 +6,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import dsq.ersatz.R;
 import dsq.ersatz.data.data.RiposteId;
-import dsq.ersatz.db.riposte.DefaultRiposteDbAdapter;
-import dsq.ersatz.db.riposte.DefaultRiposteViewBinder;
-import dsq.ersatz.db.riposte.RiposteDbAdapter;
-import dsq.ersatz.db.riposte.RiposteList;
+import dsq.ersatz.db.riposte.*;
 import dsq.thedroid.ui.ComponentIndex;
 import dsq.thedroid.ui.DefaultLists;
 import dsq.thedroid.ui.Lists;
@@ -19,6 +16,8 @@ public class DefaultRipostes implements Ripostes {
 
     private final ListActivity activity;
     private final RiposteDbAdapter adapter;
+
+    private final RiposteBroadcast broadcast = new DefaultRiposteBroadcast();
 
     public DefaultRipostes(final ListActivity activity, final SQLiteDatabase db) {
         this.activity = activity;
@@ -39,5 +38,9 @@ public class DefaultRipostes implements Ripostes {
 
     public void delete(final RiposteId rId) {
         adapter.deleteById(rId.value);
+    }
+
+    public void broadcast() {
+        broadcast.send(activity, adapter);
     }
 }
