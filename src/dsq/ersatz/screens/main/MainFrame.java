@@ -32,7 +32,6 @@ import java.util.Map;
 
 public class MainFrame extends ListActivity {
     private final DbLifecycle lifecycle = new DefaultDbLifecycle();
-    private SQLiteDatabase db;
 
     private UiActions actions;
 
@@ -48,7 +47,7 @@ public class MainFrame extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.riposte_list);
 
-        db = lifecycle.open(this);
+        final SQLiteDatabase db = lifecycle.open(this);
         final DefaultActionFactory factory = new DefaultActionFactory();
         actions = factory.nu(this, db);
 

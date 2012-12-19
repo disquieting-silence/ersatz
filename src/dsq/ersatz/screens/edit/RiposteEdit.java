@@ -42,7 +42,6 @@ public class RiposteEdit extends ListActivity {
     private UiActions actions;
 
     private final StateExtractor extractor = new DefaultStateExtractor();
-    private SQLiteDatabase db;
 
     /* Might make these static */
     private Tabs tabs = new DefaultTabs();
@@ -57,7 +56,7 @@ public class RiposteEdit extends ListActivity {
         setContentView(R.layout.riposte_edit);
         setTitle(R.string.edit_ui_title);
 
-        db = lifecycle.open(this);
+        final SQLiteDatabase db = lifecycle.open(this);
 
         final long rawId = (Long) extractor.strict(RiposteTable.ID, savedInstanceState, getIntent());
         final RiposteId id = new RiposteId(rawId);
@@ -76,6 +75,10 @@ public class RiposteEdit extends ListActivity {
         responses = setupResponses();
         buttons = setupButtons();
 
+        init();
+    }
+
+    private void init() {
         buttons.register();
     }
 
