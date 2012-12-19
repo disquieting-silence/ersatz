@@ -15,6 +15,8 @@ import dsq.ersatz.db.general.DbLifecycle;
 import dsq.ersatz.db.general.DefaultDbLifecycle;
 import dsq.ersatz.db.riposte.RiposteTable;
 import dsq.ersatz.requests.Requests;
+import dsq.ersatz.screens.edit.action.*;
+import dsq.ersatz.screens.edit.data.RiposteId;
 import dsq.ersatz.ui.button.Buttons;
 import dsq.ersatz.ui.button.Click;
 import dsq.ersatz.ui.button.DefaultButtons;

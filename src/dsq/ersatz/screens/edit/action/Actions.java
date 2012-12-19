@@ -1,6 +1,7 @@
-package dsq.ersatz.screens.edit;
+package dsq.ersatz.screens.edit.action;
 
 import android.os.Bundle;
+import dsq.ersatz.screens.edit.data.TargetId;
 
 public interface Actions extends ContactActions, TemplateActions {
     void confirm();

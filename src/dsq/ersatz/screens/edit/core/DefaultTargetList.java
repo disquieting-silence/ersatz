@@ -1,4 +1,4 @@
-package dsq.ersatz.screens.edit;
+package dsq.ersatz.screens.edit.core;
 
 import android.app.ListActivity;
 import android.database.Cursor;
@@ -7,6 +7,8 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import dsq.ersatz.R;
 import dsq.ersatz.db.target.*;
+import dsq.ersatz.screens.edit.data.RiposteId;
+import dsq.ersatz.screens.edit.data.TargetId;
 import dsq.thedroid.contacts.BasicContact;
 import dsq.thedroid.ui.ComponentIndex;
 import dsq.thedroid.ui.DefaultLists;

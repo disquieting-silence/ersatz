@@ -1,6 +1,7 @@
-package dsq.ersatz.screens.edit;
+package dsq.ersatz.screens.edit.core;
 
 import android.widget.EditText;
+import dsq.ersatz.screens.edit.data.EditStruct;
 
 public class DefaultEditUi implements EditUi {
     private final EditText name;

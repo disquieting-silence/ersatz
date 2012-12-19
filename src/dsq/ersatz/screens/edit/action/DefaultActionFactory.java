@@ -1,7 +1,12 @@
-package dsq.ersatz.screens.edit;
+package dsq.ersatz.screens.edit.action;
 
 import android.app.ListActivity;
 import android.database.sqlite.SQLiteDatabase;
+import dsq.ersatz.screens.edit.core.DefaultRiposteTy;
+import dsq.ersatz.screens.edit.core.RiposteTy;
+import dsq.ersatz.screens.edit.core.TargetList;
+import dsq.ersatz.screens.edit.core.DefaultTargetList;
+import dsq.ersatz.screens.edit.data.RiposteId;
 
 public class DefaultActionFactory implements ActionFactory {
     public UiActions nu(final ListActivity activity, final SQLiteDatabase db, final RiposteId id) {

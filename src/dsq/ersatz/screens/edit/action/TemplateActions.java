@@ -1,4 +1,4 @@
-package dsq.ersatz.screens.edit;
+package dsq.ersatz.screens.edit.action;
 
 import android.content.Intent;
 

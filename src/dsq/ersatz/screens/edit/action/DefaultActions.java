@@ -1,9 +1,13 @@
-package dsq.ersatz.screens.edit;
+package dsq.ersatz.screens.edit.action;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import dsq.ersatz.db.riposte.RiposteTable;
+import dsq.ersatz.screens.edit.core.RiposteTy;
+import dsq.ersatz.screens.edit.core.TargetList;
+import dsq.ersatz.screens.edit.data.RiposteId;
+import dsq.ersatz.screens.edit.data.TargetId;
 import dsq.ersatz.screens.main.MainFrame;
 import dsq.ersatz.util.DefaultFinish;
 import dsq.ersatz.util.Finish;

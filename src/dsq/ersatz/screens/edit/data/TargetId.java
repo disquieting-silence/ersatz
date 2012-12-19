@@ -1,4 +1,4 @@
-package dsq.ersatz.screens.edit;
+package dsq.ersatz.screens.edit.data;
 
 public class TargetId {
     public final long value;

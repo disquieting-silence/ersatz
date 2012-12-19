@@ -1,9 +1,11 @@
-package dsq.ersatz.screens.edit;
+package dsq.ersatz.screens.edit.action;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import dsq.ersatz.requests.Requests;
+import dsq.ersatz.screens.edit.core.TargetList;
+import dsq.ersatz.screens.edit.data.TargetId;
 import dsq.thedroid.contacts.BasicContact;
 import dsq.thedroid.contacts.Contacts;
 import dsq.thedroid.contacts.DefaultContacts;

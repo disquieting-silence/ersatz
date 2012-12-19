@@ -1,4 +1,4 @@
-package dsq.ersatz.screens.edit;
+package dsq.ersatz.screens.edit.data;
 
 public class RiposteId {
     public final long value;

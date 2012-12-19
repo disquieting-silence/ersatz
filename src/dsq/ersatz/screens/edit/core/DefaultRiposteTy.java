@@ -1,4 +1,4 @@
-package dsq.ersatz.screens.edit;
+package dsq.ersatz.screens.edit.core;
 
 import android.app.Activity;
 import android.database.Cursor;
@@ -9,6 +9,8 @@ import dsq.ersatz.R;
 import dsq.ersatz.db.riposte.DefaultRiposteDbAdapter;
 import dsq.ersatz.db.riposte.RiposteDbAdapter;
 import dsq.ersatz.db.riposte.RiposteTable;
+import dsq.ersatz.screens.edit.data.EditStruct;
+import dsq.ersatz.screens.edit.data.RiposteId;
 import dsq.thedroid.db.DbUtils;
 import dsq.thedroid.util.CursorOperation;
 import dsq.thedroid.util.DefaultIdCursor;
