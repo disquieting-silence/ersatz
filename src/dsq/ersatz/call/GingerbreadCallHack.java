@@ -1,6 +1,6 @@
 package dsq.ersatz.call;
 
-import android.aidl.ITelephony;
+import com.android.internal.telephony.ITelephony;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 import android.util.Log;

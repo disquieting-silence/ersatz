@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import dsq.ersatz.call.CallHack;
 import dsq.ersatz.call.GingerbreadCallHack;
@@ -14,32 +15,29 @@ import dsq.ersatz.query.RiposteResponse;
 
 import java.util.List;
 
-//http://www.androidcompetencycenter.com/2008/12/android-api-sms-handling/
-public class SmsReceiver extends BroadcastReceiver {
+public class CallReceiver extends BroadcastReceiver {
 
     private static final boolean EMULATOR_DEBUGGING = true;
-
     private final RiposteFirer fire = new DefaultRiposteFirer();
-    private final Messages tools = new DefaultMessages();
     private final RiposteResponse response = new DefaultRiposteResponse();
     private final Converter converter = new DefaultConverter();
+    private final CallHack callHack = new GingerbreadCallHack();
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
         final Bundle bundle = intent.getExtras();
-        final List<SmsMessage> messages = tools.parse(bundle);
-        final String number = getSmsNumber(messages);
-        long currentTime = System.currentTimeMillis();
-        List<Riposte> ripostes = response.find(context, number, currentTime);
+        final String number = getCallNumber(bundle);
+        final long currentTime = System.currentTimeMillis();
+        final List<Riposte> ripostes = response.find(context, number, currentTime);
 
         if (ripostes.size() > 0) {
+            callHack.hangup(context);
             fire.fire(context, number, ripostes, currentTime);
         }
     }
 
-    private String getSmsNumber(final List<SmsMessage> messages) {
-        SmsMessage first = messages.get(0);
-        String international = first.getOriginatingAddress();
-        return EMULATOR_DEBUGGING ? international : converter.toLocal(international);
+    private String getCallNumber(final Bundle bundle) {
+        final String number = bundle.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
+        return EMULATOR_DEBUGGING ? number : converter.toLocal(number);
     }
 }
