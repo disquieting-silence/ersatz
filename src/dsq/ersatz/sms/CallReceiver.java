@@ -4,11 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.telephony.SmsMessage;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import dsq.ersatz.call.CallHack;
-import dsq.ersatz.call.GingerbreadCallHack;
+import dsq.ersatz.call.FroyoCallHack;
 import dsq.ersatz.db.riposte.Riposte;
 import dsq.ersatz.query.DefaultRiposteResponse;
 import dsq.ersatz.query.RiposteResponse;
@@ -21,10 +19,12 @@ public class CallReceiver extends BroadcastReceiver {
     private final RiposteFirer fire = new DefaultRiposteFirer();
     private final RiposteResponse response = new DefaultRiposteResponse();
     private final Converter converter = new DefaultConverter();
-    private final CallHack callHack = new GingerbreadCallHack();
+    private final CallHack callHack = new FroyoCallHack();
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
+        // FIX: Temporarily disable.
+        if (true) return;
         final Bundle bundle = intent.getExtras();
         final String number = getCallNumber(bundle);
         final long currentTime = System.currentTimeMillis();
