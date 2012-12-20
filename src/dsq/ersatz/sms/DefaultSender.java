@@ -6,6 +6,8 @@ import dsq.ersatz.db.riposte.Riposte;
 
 public class DefaultSender implements Sender {
 
+    public static final String PREFIX = "[ERSATZ]: ";
+
     public void send(Context context, Riposte riposte, String localNumber) {
         SmsManager manager = SmsManager.getDefault();
         manager.sendTextMessage(localNumber, null, riposte.message, null, null);
