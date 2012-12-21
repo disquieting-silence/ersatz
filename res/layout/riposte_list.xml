@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:dsq="http://schemas.android.com/apk/res/dsq.ersatz"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:orientation="vertical">
@@ -20,6 +21,21 @@
     </LinearLayout>
 
     <LinearLayout style="@style/Commandbar">
+        <dsq.ersatz.ui.commandbar.DefaultButtonIcon
+                android:id="@+id/back"
+                dsq:icon="icon"
+                android:paddingTop="8px"
+                style="@style/CommandbarIcon"/>
+        <dsq.ersatz.ui.commandbar.DefaultButtonIcon
+                android:id="@+id/back2"
+                dsq:icon="icon"
+                android:paddingTop="8px"
+                style="@style/CommandbarIcon"/>
 
+        <dsq.ersatz.ui.commandbar.DefaultButtonIcon
+                android:id="@+id/back3"
+                dsq:icon="icon"
+                android:paddingTop="8px"
+                style="@style/CommandbarIcon"/>
     </LinearLayout>
 </LinearLayout>

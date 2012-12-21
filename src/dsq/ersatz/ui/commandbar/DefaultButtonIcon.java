@@ -23,7 +23,7 @@ public class DefaultButtonIcon extends LinearLayout implements ButtonIcon {
         button = new ImageButton(context);
 
         final int drawable = context.getResources().getIdentifier(value, "drawable", context.getPackageName());
-        button.setBackgroundResource(drawable);
+        if (drawable > -1) button.setBackgroundResource(drawable);
 
         final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         button.setLayoutParams(params);
