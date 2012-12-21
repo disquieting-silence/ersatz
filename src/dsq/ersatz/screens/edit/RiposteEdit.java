@@ -1,6 +1,7 @@
 package dsq.ersatz.screens.edit;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.TabHost;
 import dsq.ersatz.R;
 import dsq.ersatz.action.IdAction;
 import dsq.ersatz.action.IntentAction;
@@ -22,6 +25,8 @@ import dsq.ersatz.ui.button.Buttons;
 import dsq.ersatz.ui.button.DefaultButtons;
 import dsq.ersatz.ui.context.Contexts;
 import dsq.ersatz.ui.context.DefaultContexts;
+import dsq.ersatz.ui.keyboard.DefaultKeyboardUtil;
+import dsq.ersatz.ui.keyboard.KeyboardUtil;
 import dsq.ersatz.ui.option.DefaultOptions;
 import dsq.ersatz.ui.option.Options;
 import dsq.ersatz.ui.response.DefaultResponses;
@@ -110,11 +115,26 @@ public class RiposteEdit extends ListActivity {
         return new DefaultButtons(this, commands);
     }
 
+    private void updateKeyboard(final TabHost host, final String tabName) {
+        final KeyboardUtil keyboard = new DefaultKeyboardUtil();
+        final String label = getString(R.string.tab_recipients);
+        if (label.equals(tabName)) {
+            keyboard.hide(this, host);
+        }
+    }
+
     private void setupTabs() {
-        tabs.install(this, R.id.tabHost, Arrays.asList(
-            new TabInfo(R.string.tab_general, R.id.tab_general),
-            new TabInfo(R.string.tab_recipients, R.id.tab_recipients)
+        final TabHost host = tabs.install(this, R.id.tabHost, Arrays.asList(
+                new TabInfo(R.string.tab_general, R.id.tab_general),
+                new TabInfo(R.string.edit_ui_message, R.id.tab_message),
+                new TabInfo(R.string.tab_recipients, R.id.tab_recipients)
         ));
+
+        host.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            public void onTabChanged(final String s) {
+                updateKeyboard(host, s);
+            }
+        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
