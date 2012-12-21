@@ -7,13 +7,13 @@ import dsq.thedroid.ui.ListMapping;
 public class RiposteList implements ListMapping {
 
     private final static String[] source = new String[]{
-            RiposteTable.NAME,
-            RiposteTable.ENABLED
+            RiposteTable.NAME
+//            RiposteTable.ENABLED
     };
 
     private final static ComponentIndex[] dest = new ComponentIndex[]{
-            new ComponentIndex(R.id.name),
-            new ComponentIndex(R.id.enabled)
+            new ComponentIndex(R.id.name)
+//            new ComponentIndex(R.id.enabled)
     };
 
     public String[] source() {

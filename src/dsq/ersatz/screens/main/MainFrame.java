@@ -19,6 +19,8 @@ import dsq.ersatz.db.riposte.RiposteBroadcast;
 import dsq.ersatz.requests.Requests;
 import dsq.ersatz.screens.main.action.DefaultActionFactory;
 import dsq.ersatz.screens.main.action.UiActions;
+import dsq.ersatz.ui.commandbar.ButtonIcon;
+import dsq.ersatz.ui.commandbar.DefaultButtonIcon;
 import dsq.ersatz.ui.context.Contexts;
 import dsq.ersatz.ui.context.DefaultContexts;
 import dsq.ersatz.ui.option.DefaultOptions;
@@ -54,7 +56,10 @@ public class MainFrame extends ListActivity {
         contexts = setupContexts();
         options = setupOptions();
         responses = setupResponses();
-        registerForContextMenu(getListView());
+//        registerForContextMenu(getListView());
+
+        final ButtonIcon backButton = (DefaultButtonIcon) findViewById(R.id.back);
+        backButton.setAction(actions.launchAdd());
     }
 
     private Contexts setupContexts() {

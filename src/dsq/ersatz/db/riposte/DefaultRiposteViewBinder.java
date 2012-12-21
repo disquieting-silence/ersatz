@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 
 public class DefaultRiposteViewBinder implements RiposteViewBinder {
 
@@ -19,6 +20,12 @@ public class DefaultRiposteViewBinder implements RiposteViewBinder {
     }
     public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
         final int id = getId(cursor);
+        final int enabled = cursor.getInt(ENABLED_COLUMN);
+
+        final LinearLayout parent = (LinearLayout) view.getParent();
+        final int colour = enabled == 0 ? 0x770000BB : 0xFF000000;
+        parent.setBackgroundColor(colour);
+
         if (columnIndex == ENABLED_COLUMN) {
             setupCheckbox((CheckBox) view, cursor, id);
             return true;
