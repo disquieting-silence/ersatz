@@ -28,6 +28,7 @@
     <string name="insert_plant_no_template">No template selected.</string>
     
     <string name="tab_general">General</string>
+    <string name="tab_message">Message</string>
     <string name="tab_recipients">Recipients</string>
     
     <string name="ersatz_settings">Settings</string>

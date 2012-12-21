@@ -48,3 +48,8 @@ Generating a build requires all involved projects to have a valid build script. 
     sdk.dir is missing. Make sure to generate local.properties using 'android update project' or to inject it through an env var
 
 This error can occur for either `ersatz` itself, or any dependent projects (such as `thedroid`). As the error message suggests, the solution is to execute `android update project` with the relevant parameters for the problem project. A full guide to updating projects via the command line can be found [here.](http://developer.android.com/tools/projects/projects-cmdline.html#UpdatingAProject)
+
+
+### Acknowledgements
+
+Mirror icon: http://icons.iconarchive.com/icons/greg-barnes/vampire-hunter/48/Mirror-icon.png

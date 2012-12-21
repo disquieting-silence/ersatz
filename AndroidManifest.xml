@@ -37,7 +37,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".screens.edit.RiposteEdit">
+        <activity android:name=".screens.edit.RiposteEdit" android:windowSoftInputMode="adjustResize">
 
         </activity>
         <activity android:name=".screens.settings.Settings">

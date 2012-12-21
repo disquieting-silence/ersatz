@@ -24,17 +24,24 @@
             >
 
         <LinearLayout android:id="@+id/tab_general"
-                     android:layout_width="fill_parent"
-                     android:layout_height="fill_parent"
-                     android:orientation="vertical">
-            <EditText android:id="@+id/name"
+                      android:orientation="vertical"
                       android:layout_width="fill_parent"
+                      android:layout_height="fill_parent">
+            <EditText android:id="@+id/name"
+                      android:layout_alignParentTop="true"
+                      android:layout_marginTop="5dip"
+                      android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:hint="@string/edit_ui_riposte_name"/>
+                      android:lines="1"
+                      android:singleLine="true"
+                      android:hint="@string/edit_ui_riposte_name"
+                      android:inputType="text"
+                      android:gravity="top"/>
         </LinearLayout>
-        
 
-        <LinearLayout android:id="@+id/tab_recipients" android:orientation="vertical" android:layout_width="fill_parent"
+        <LinearLayout android:id="@+id/tab_recipients"
+                      android:orientation="vertical"
+                      android:layout_width="fill_parent"
                       android:layout_height="wrap_content">
             <Button android:id="@+id/browse"
                         android:text="@string/edit_ui_browse"
@@ -50,7 +57,9 @@
                       android:layout_height="wrap_content"
                       android:text="@string/edit_ui_no_targets"/>
         </LinearLayout>
-        <LinearLayout android:id="@+id/tab_message" android:orientation="vertical" android:layout_width="fill_parent"
+        <LinearLayout android:id="@+id/tab_message"
+                      android:orientation="vertical"
+                      android:layout_width="fill_parent"
                       android:layout_height="fill_parent">
             <EditText android:id="@+id/message"
                       android:layout_marginTop="5dip"
@@ -66,7 +75,8 @@
     </FrameLayout>
 
     <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent"
-                  android:layout_height="wrap_content" android:layout_gravity="bottom">
+                  android:layout_height="wrap_content" android:layout_gravity="bottom"
+                  android:layout_alignParentBottom="true">
         <Button android:id="@+id/cancel"
                 android:text="@string/ui_cancel"
                 android:layout_width="wrap_content"

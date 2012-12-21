@@ -126,7 +126,7 @@ public class RiposteEdit extends ListActivity {
     private void setupTabs() {
         final TabHost host = tabs.install(this, R.id.tabHost, Arrays.asList(
                 new TabInfo(R.string.tab_general, R.id.tab_general),
-                new TabInfo(R.string.edit_ui_message, R.id.tab_message),
+                new TabInfo(R.string.tab_message, R.id.tab_message),
                 new TabInfo(R.string.tab_recipients, R.id.tab_recipients)
         ));
 
