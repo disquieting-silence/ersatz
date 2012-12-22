@@ -11,5 +11,4 @@ public interface Ripostes {
     void delete(RiposteId rId);
 
     void broadcast();
-    void onSelect(IdAction action);
 }

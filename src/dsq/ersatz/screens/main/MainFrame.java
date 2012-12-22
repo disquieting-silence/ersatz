@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import dsq.ersatz.requests.Requests;
 import dsq.ersatz.screens.main.action.DefaultActionFactory;
 import dsq.ersatz.screens.main.action.UiActions;
 import dsq.ersatz.ui.commandbar.ButtonIcon;
+import dsq.ersatz.ui.commandbar.Commandbar;
 import dsq.ersatz.ui.commandbar.DefaultButtonIcon;
 import dsq.ersatz.ui.context.Contexts;
 import dsq.ersatz.ui.context.DefaultContexts;
@@ -50,8 +52,9 @@ public class MainFrame extends ListActivity {
         setContentView(R.layout.riposte_list);
 
         final SQLiteDatabase db = lifecycle.open(this);
+        final Rabbit rabbit = new DefaultRabbit();
         final DefaultActionFactory factory = new DefaultActionFactory();
-        actions = factory.nu(this, db);
+        actions = factory.nu(this, db, rabbit);
 
         contexts = setupContexts();
         options = setupOptions();
@@ -60,6 +63,12 @@ public class MainFrame extends ListActivity {
 
         final ButtonIcon backButton = (DefaultButtonIcon) findViewById(R.id.back);
         backButton.setAction(actions.launchAdd());
+        
+        rabbit.getList().onSelect(new IdAction() {
+            public void run(final long id) {
+                Log.v("ERSATZ", String.valueOf(id));
+            }
+        });
     }
 
     private Contexts setupContexts() {

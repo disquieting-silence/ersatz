@@ -12,6 +12,7 @@ import dsq.ersatz.R;
 import dsq.ersatz.action.IdAction;
 import dsq.ersatz.data.data.RiposteId;
 import dsq.ersatz.db.riposte.*;
+import dsq.ersatz.screens.main.Rabbit;
 import dsq.ersatz.ui.list.DefaultSelectableDataList;
 import dsq.ersatz.ui.list.SelectableDataList;
 import dsq.thedroid.ui.ComponentIndex;
@@ -28,12 +29,14 @@ public class DefaultRipostes implements Ripostes {
 
     private final RiposteBroadcast broadcast = new DefaultRiposteBroadcast();
 
-    public DefaultRipostes(final ListActivity activity, final SQLiteDatabase db) {
+    public DefaultRipostes(final ListActivity activity, final SQLiteDatabase db, final Rabbit rabbit) {
         this.activity = activity;
         adapter = new DefaultRiposteDbAdapter(db);
         final DefaultRiposteViewBinder binder = new DefaultRiposteViewBinder(adapter);
         list = new DefaultSelectableDataList(adapter, binder,
             activity, R.layout.riposte_row, new RiposteList());
+
+        rabbit.setList(list);
     }
 
     public RiposteId nu() {
@@ -52,9 +55,5 @@ public class DefaultRipostes implements Ripostes {
 
     public void broadcast() {
         broadcast.send(activity, adapter);
-    }
-
-    public void onSelect(final IdAction action) {
-        list.onSelect(action);
     }
 }

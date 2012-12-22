@@ -14,6 +14,8 @@ public class DefaultButtonIcon extends LinearLayout implements ButtonIcon {
 
     private final ImageButton button;
 
+    private boolean enabled = true;
+
     public DefaultButtonIcon(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -35,8 +37,12 @@ public class DefaultButtonIcon extends LinearLayout implements ButtonIcon {
     public void setAction(final SimpleAction action) {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View view) {
-                action.run();
+                if (enabled) action.run();
             }
         });
+    }
+
+    public void setActionEnabled(final boolean enabled) {
+        this.enabled = enabled;
     }
 }

@@ -10,6 +10,4 @@ public interface UiActions {
     SimpleAction launchAdd();
     IntentAction cancel();
     SimpleAction launchSettings();
-
-    IdAction updateUi();
 }

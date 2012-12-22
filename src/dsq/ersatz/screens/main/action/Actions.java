@@ -9,6 +9,4 @@ public interface Actions {
     void launchEdit(RiposteId id);
     void launchAdd();
     void launchSettings();
-
-    void updateUi(final long id);
 }
