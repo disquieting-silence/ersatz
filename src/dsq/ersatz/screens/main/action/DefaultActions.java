@@ -42,6 +42,11 @@ public class DefaultActions implements Actions {
         activity.startActivity(intent);
     }
 
+    public void updateUi(final long id) {
+        // stuff.
+
+    }
+
     private void launch(final RiposteId id, int requestCode) {
         final Intent intent = new Intent(activity, RiposteEdit.class);
         intent.putExtra(RiposteTable.ID, id.value);

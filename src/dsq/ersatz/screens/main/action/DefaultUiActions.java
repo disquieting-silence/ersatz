@@ -61,6 +61,14 @@ public class DefaultUiActions implements UiActions {
         };
     }
 
+    public IdAction updateUi() {
+        return new IdAction() {
+            public void run(final long id) {
+                actions.updateUi(id);
+            }
+        };
+    }
+
     private void deleteById(final long id) {
         final RiposteId rId = new RiposteId(id);
         actions.delete(rId);

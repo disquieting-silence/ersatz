@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import dsq.ersatz.action.IdAction;
 import dsq.thedroid.db.DbAdapter;
 import dsq.thedroid.ui.ComponentIndex;
 import dsq.thedroid.ui.ListMapping;
@@ -22,6 +23,8 @@ public class DefaultSelectableDataList implements SelectableDataList {
 
     private long selectedId = -1;
 
+    private IdAction selectAction;
+
     public DefaultSelectableDataList(final DbAdapter adapter, final AdapterBinder binder, final ListActivity activity, final int row, final ListMapping mapping) {
         this.adapter = adapter;
         this.binder = binder;
@@ -33,6 +36,7 @@ public class DefaultSelectableDataList implements SelectableDataList {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(final AdapterView<?> adapterView, final View view, final int i, final long l) {
                 selectedId = listView.getItemIdAtPosition(i);
+                selectAction.run(selectedId);
                 refresh();
             }
         });
@@ -59,6 +63,10 @@ public class DefaultSelectableDataList implements SelectableDataList {
             }
         });
         listView.setAdapter(c);
+    }
+
+    public void onSelect(final IdAction action) {
+        selectAction = action;
     }
 
     private int[] ids(final ListMapping mapping, final ComponentIndex[] destUis) {
