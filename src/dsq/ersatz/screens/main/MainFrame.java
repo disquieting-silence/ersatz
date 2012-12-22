@@ -20,11 +20,13 @@ import dsq.ersatz.db.riposte.RiposteBroadcast;
 import dsq.ersatz.requests.Requests;
 import dsq.ersatz.screens.main.action.DefaultActionFactory;
 import dsq.ersatz.screens.main.action.UiActions;
+import dsq.ersatz.screens.main.core.RiposteV;
 import dsq.ersatz.ui.commandbar.ButtonIcon;
 import dsq.ersatz.ui.commandbar.Commandbar;
 import dsq.ersatz.ui.commandbar.DefaultButtonIcon;
 import dsq.ersatz.ui.context.Contexts;
 import dsq.ersatz.ui.context.DefaultContexts;
+import dsq.ersatz.ui.list.ItemAction;
 import dsq.ersatz.ui.option.DefaultOptions;
 import dsq.ersatz.ui.option.Options;
 import dsq.ersatz.ui.response.DefaultResponses;
@@ -52,7 +54,7 @@ public class MainFrame extends ListActivity {
         setContentView(R.layout.riposte_list);
 
         final SQLiteDatabase db = lifecycle.open(this);
-        final Rabbit rabbit = new DefaultRabbit();
+        final Rabbit<RiposteV> rabbit = new DefaultRabbit<RiposteV>();
         final DefaultActionFactory factory = new DefaultActionFactory();
         actions = factory.nu(this, db, rabbit);
 
@@ -64,11 +66,10 @@ public class MainFrame extends ListActivity {
         final ButtonIcon backButton = (DefaultButtonIcon) findViewById(R.id.back);
         backButton.setAction(actions.launchAdd());
         
-        rabbit.getList().onSelect(new IdAction() {
-            public void run(final long id) {
-//                getListView().get
+        rabbit.getList().onSelect(new ItemAction<RiposteV>() {
+            public void run(final long id, final RiposteV v) {
                 Log.v("ERSATZ", String.valueOf(id));
-                backButton.setActionEnabled(id == 4);
+                backButton.setActionEnabled(v.enabled);
             }
         });
     }

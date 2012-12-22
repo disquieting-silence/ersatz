@@ -2,7 +2,7 @@ package dsq.ersatz.screens.main;
 
 import dsq.ersatz.ui.list.SelectableDataList;
 
-public interface Rabbit {
-    SelectableDataList getList();
-    void setList(SelectableDataList list);
+public interface Rabbit<A> {
+    SelectableDataList<A> getList();
+    void setList(SelectableDataList<A> list);
 }

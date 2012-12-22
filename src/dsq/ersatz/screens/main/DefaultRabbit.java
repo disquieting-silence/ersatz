@@ -3,15 +3,15 @@ package dsq.ersatz.screens.main;
 import dsq.ersatz.ui.list.SelectableDataList;
 
 // FIX 22/12/12 Questionable concept. See how it pans out.
-public class DefaultRabbit implements Rabbit {
+public class DefaultRabbit<A> implements Rabbit<A> {
 
-    private SelectableDataList list = null;
+    private SelectableDataList<A> list = null;
 
-    public SelectableDataList getList() {
+    public SelectableDataList<A> getList() {
         return list;
     }
 
-    public void setList(final SelectableDataList list) {
+    public void setList(final SelectableDataList<A> list) {
         this.list = list;
     }
 }

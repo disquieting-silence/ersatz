@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import dsq.ersatz.widget.ErsatzWidgetProvider;
 
+// FIX 22/12/12 What has this got to do with db?
 public class DefaultRiposteBroadcast implements RiposteBroadcast {
 
     public void send(final Context context, RiposteDbAdapter adapter) {

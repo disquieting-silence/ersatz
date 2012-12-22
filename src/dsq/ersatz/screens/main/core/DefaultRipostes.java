@@ -25,16 +25,15 @@ public class DefaultRipostes implements Ripostes {
     private final ListActivity activity;
     private final RiposteDbAdapter adapter;
 
-    private final SelectableDataList list;
+    private final SelectableDataList<RiposteV> list;
 
     private final RiposteBroadcast broadcast = new DefaultRiposteBroadcast();
 
-    public DefaultRipostes(final ListActivity activity, final SQLiteDatabase db, final Rabbit rabbit) {
+    public DefaultRipostes(final ListActivity activity, final SQLiteDatabase db, final Rabbit<RiposteV> rabbit) {
         this.activity = activity;
         adapter = new DefaultRiposteDbAdapter(db);
-        final DefaultRiposteViewBinder binder = new DefaultRiposteViewBinder(adapter);
-        list = new DefaultSelectableDataList(adapter, binder,
-            activity, R.layout.riposte_row, new RiposteList());
+        final RiposteListDefinition definition = new DefaultRiposteListDefinition();
+        list = new DefaultSelectableDataList<RiposteV>(activity, adapter, definition, R.layout.riposte_row);
 
         rabbit.setList(list);
     }
