@@ -21,10 +21,7 @@ import dsq.ersatz.requests.Requests;
 import dsq.ersatz.screens.main.action.DefaultActionFactory;
 import dsq.ersatz.screens.main.action.UiActions;
 import dsq.ersatz.screens.main.core.RiposteV;
-import dsq.ersatz.ui.commandbar.ButtonIcon;
-import dsq.ersatz.ui.commandbar.ButtonImages;
-import dsq.ersatz.ui.commandbar.Commandbar;
-import dsq.ersatz.ui.commandbar.DefaultButtonIcon;
+import dsq.ersatz.ui.commandbar.*;
 import dsq.ersatz.ui.context.Contexts;
 import dsq.ersatz.ui.context.DefaultContexts;
 import dsq.ersatz.ui.list.ItemAction;
@@ -45,6 +42,8 @@ public class MainFrame extends ListActivity {
     private Contexts contexts;
     private Options options;
     private Responses responses;
+    private Commandbar commands;
+    private CommandId cid = new DefaultCommandId();
 
     private RiposteV current;
 
@@ -64,35 +63,36 @@ public class MainFrame extends ListActivity {
         contexts = setupContexts();
         options = setupOptions();
         responses = setupResponses();
+        
+        final Commandbar commands = setupCommands();
 //        registerForContextMenu(getListView());
 
-        final ButtonIcon backButton = (DefaultButtonIcon) findViewById(R.id.back);
-        backButton.setAction(new SimpleAction() {
-            public void run() {
-                final IdAction idAction = actions.toggleEnabled();
-                if (current != null) {
-                    Log.v("ERSATZ", "Executing on: " + String.valueOf(current.id));
-                    idAction.run(current.id);
-                } else {
-
-                }
-
-            }
-        });
+        final ButtonIcon toggleButton = commands.get(R.id.command_toggle);
 
         final ItemAction<RiposteV> onSelect = new ItemAction<RiposteV>() {
             public void run(final long id, final RiposteV v) {
                 current = v;
+                cid.set(v.id);
                 Log.v("ERSATZ", String.valueOf(id));
-                // FIX 22/12/12 Need to fix this.
-                backButton.setActionEnabled(true);
-                backButton.setImages(v.enabled ? new OnButtonImages() : new OffButtonImages());
+                commands.update();
+
+                toggleButton.setImages(v.enabled ? new OnButtonImages() : new OffButtonImages());
             }
         };
 
-        backButton.setImages(new OffButtonImages());
-        backButton.setActionEnabled(false);
+        toggleButton.setImages(new OffButtonImages());
         rabbit.getList().onSelect(onSelect);
+        commands.update();
+
+        commands.register();
+    }
+
+    private Commandbar setupCommands() {
+        final Map<Integer, IdAction> mapping = new HashMap<Integer, IdAction>();
+        mapping.put(R.id.command_toggle, actions.toggleEnabled());
+        mapping.put(R.id.command_edit, actions.launchEdit());
+        mapping.put(R.id.command_delete, actions.delete());
+        return new DefaultCommandbar(this, mapping, cid);
     }
 
     private Contexts setupContexts() {

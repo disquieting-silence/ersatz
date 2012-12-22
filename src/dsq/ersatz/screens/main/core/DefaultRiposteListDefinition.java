@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,6 +38,10 @@ public class DefaultRiposteListDefinition implements RiposteListDefinition {
     }
 
     public RiposteV build(final Cursor c) {
+        return c.moveToFirst() ? safeBuild(c) : new RiposteV(-1, "", false);
+    }
+
+    private RiposteV safeBuild(final Cursor c) {
         final int id = getId(c);
         final String name = getName(c);
         final boolean enabled = isEnabled(c);
@@ -54,8 +59,9 @@ public class DefaultRiposteListDefinition implements RiposteListDefinition {
     }
 
     private int getId(final Cursor c) {
+        if (!c.moveToFirst()) return -1;
         final int idCol = c.getColumnIndex(RiposteTable.ID);
-        return c.getInt(idCol);
+        return idCol < c.getColumnCount() ? c.getInt(idCol) : -1;
     }
 
     public boolean setViewValue(final View view, final Cursor cursor, final int columnIndex) {

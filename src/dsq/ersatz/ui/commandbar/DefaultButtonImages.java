@@ -17,6 +17,6 @@ public class DefaultButtonImages implements ButtonImages {
     }
 
     public String disabled() {
-        return base + "_disabled";
+        return base + "";
     }
 }

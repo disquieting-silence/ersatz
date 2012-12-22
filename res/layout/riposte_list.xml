@@ -27,26 +27,20 @@
 
     <LinearLayout style="@style/Commandbar">
         <dsq.ersatz.ui.commandbar.DefaultButtonIcon
-                android:id="@+id/back"
+                android:id="@+id/command_toggle"
                 dsq:icon="icon"
                 android:paddingTop="8px"
                 style="@style/CommandbarIcon"/>
 
         <dsq.ersatz.ui.commandbar.DefaultButtonIcon
-                android:id="@+id/back4"
+                android:id="@+id/command_edit"
                 dsq:icon="icon_edit"
                 android:paddingTop="8px"
                 style="@style/CommandbarIcon"/>
 
         <dsq.ersatz.ui.commandbar.DefaultButtonIcon
-                android:id="@+id/back5"
+                android:id="@+id/command_delete"
                 dsq:icon="icon_delete"
-                android:paddingTop="8px"
-                style="@style/CommandbarIcon"/>
-
-        <dsq.ersatz.ui.commandbar.DefaultButtonIcon
-                android:id="@+id/back6"
-                dsq:icon="icon_add"
                 android:paddingTop="8px"
                 style="@style/CommandbarIcon"/>
 

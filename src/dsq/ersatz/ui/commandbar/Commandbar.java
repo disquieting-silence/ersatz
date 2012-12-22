@@ -3,5 +3,9 @@ package dsq.ersatz.ui.commandbar;
 import dsq.ersatz.action.IdAction;
 
 public interface Commandbar {
-    IdAction update();
+    void trigger(int actionId);
+    void update();
+    void register();
+
+    ButtonIcon get(int actionId);
 }
