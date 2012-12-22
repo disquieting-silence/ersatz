@@ -17,8 +17,13 @@
                   android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
                   android:text="@string/main_ui_no_ripostes"/>
-
     </LinearLayout>
+
+    <ImageButton android:id="@+id/list_add"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:src="@drawable/icon_add"/>
+
 
     <LinearLayout style="@style/Commandbar">
         <dsq.ersatz.ui.commandbar.DefaultButtonIcon
@@ -26,16 +31,24 @@
                 dsq:icon="icon"
                 android:paddingTop="8px"
                 style="@style/CommandbarIcon"/>
+
         <dsq.ersatz.ui.commandbar.DefaultButtonIcon
-                android:id="@+id/back2"
-                dsq:icon="icon"
+                android:id="@+id/back4"
+                dsq:icon="icon_edit"
                 android:paddingTop="8px"
                 style="@style/CommandbarIcon"/>
 
         <dsq.ersatz.ui.commandbar.DefaultButtonIcon
-                android:id="@+id/back3"
-                dsq:icon="icon"
+                android:id="@+id/back5"
+                dsq:icon="icon_delete"
                 android:paddingTop="8px"
                 style="@style/CommandbarIcon"/>
+
+        <dsq.ersatz.ui.commandbar.DefaultButtonIcon
+                android:id="@+id/back6"
+                dsq:icon="icon_add"
+                android:paddingTop="8px"
+                style="@style/CommandbarIcon"/>
+
     </LinearLayout>
 </LinearLayout>

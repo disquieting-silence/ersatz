@@ -53,3 +53,5 @@ This error can occur for either `ersatz` itself, or any dependent projects (such
 ### Acknowledgements
 
 Mirror icon: http://icons.iconarchive.com/icons/greg-barnes/vampire-hunter/48/Mirror-icon.png
+
+Other icons: http://findicons.com/pack/766/base_software (http://www.icons-land.com/)
