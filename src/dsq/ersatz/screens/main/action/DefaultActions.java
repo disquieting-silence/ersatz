@@ -47,6 +47,10 @@ public class DefaultActions implements Actions {
         ripostes.refresh();
     }
 
+    public void refresh() {
+        ripostes.refresh();
+    }
+
     private void launch(final RiposteId id, int requestCode) {
         final Intent intent = new Intent(activity, RiposteEdit.class);
         intent.putExtra(RiposteTable.ID, id.value);

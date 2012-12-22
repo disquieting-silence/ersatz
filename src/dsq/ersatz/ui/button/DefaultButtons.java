@@ -2,7 +2,6 @@ package dsq.ersatz.ui.button;
 
 import android.app.Activity;
 import android.view.View;
-import android.widget.Button;
 import dsq.ersatz.action.SimpleAction;
 
 import java.util.HashMap;
@@ -30,8 +29,8 @@ public class DefaultButtons implements Buttons {
     }
 
     private void register(final Activity activity, final int id, final SimpleAction action) {
-        Button r = (Button) activity.findViewById(id);
-        r.setOnClickListener(new View.OnClickListener() {
+        final View view = activity.findViewById(id);
+        view.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 action.run();
             }

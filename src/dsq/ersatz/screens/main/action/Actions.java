@@ -11,4 +11,6 @@ public interface Actions {
     void launchSettings();
 
     void toggleEnabled(RiposteId riposteId);
+
+    void refresh();
 }

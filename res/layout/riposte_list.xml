@@ -19,7 +19,7 @@
                   android:text="@string/main_ui_no_ripostes"/>
     </LinearLayout>
 
-    <ImageButton android:id="@+id/list_add"
+    <ImageButton android:id="@+id/new_riposte"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:src="@drawable/icon_add"/>

@@ -11,4 +11,5 @@ public interface UiActions {
     IntentAction cancel();
     SimpleAction launchSettings();
     IdAction toggleEnabled();
+    SimpleAction refresh();
 }
