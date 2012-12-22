@@ -2,24 +2,18 @@ package dsq.ersatz.ui.list;
 
 import android.app.ListActivity;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import dsq.ersatz.action.IdAction;
 import dsq.thedroid.db.DbAdapter;
 import dsq.thedroid.ui.ComponentIndex;
-import dsq.thedroid.ui.ListMapping;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
 
 public class DefaultSelectableDataList<A> implements SelectableDataList<A> {
 
-    public static final int HIGHLIGHT_COLOUR = 0x55CCDD33;
+    public static final int HIGHLIGHT_COLOUR = 0x55CADBEE;
     private final DbAdapter adapter;
     private final ListActivity activity;
     private final ComponentIndex row;
@@ -71,9 +65,7 @@ public class DefaultSelectableDataList<A> implements SelectableDataList<A> {
                 final boolean result = definition.setViewValue(view, cursor, i);
                 // FIX 22/12/12 Not convinced that I can just get the 0th position.
                 final int id = cursor.getInt(0);
-                if (id == selectedId) {
-                    highlight(view);
-                }
+                highlight(view, id == selectedId ? HIGHLIGHT_COLOUR : 0xFF00000);
                 return result;
             }
         });
@@ -81,9 +73,10 @@ public class DefaultSelectableDataList<A> implements SelectableDataList<A> {
         notifySelect();
     }
 
-    private void highlight(final View cell) {
+    private void highlight(final View cell, final int colour) {
         final LinearLayout parent = (LinearLayout) cell.getParent();
-//        parent.setBackgroundColor(HIGHLIGHT_COLOUR);
+        Log.v("ERSATZ", String.valueOf("view: " + parent));
+        parent.setBackgroundColor(colour);
     }
 
     public void onSelect(final ItemAction<A> action) {

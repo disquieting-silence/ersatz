@@ -20,6 +20,8 @@ public class DefaultButtonIcon extends LinearLayout implements ButtonIcon {
     private boolean enabled = true;
     private final Context context;
 
+    private ButtonImages images;
+
     public DefaultButtonIcon(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
@@ -33,18 +35,20 @@ public class DefaultButtonIcon extends LinearLayout implements ButtonIcon {
         button.setLayoutParams(params);
 
         addView(button);
-        setupSelector(iconBase);
+        images = new DefaultButtonImages(iconBase);
+        setupSelector();
     }
 
-    private void setupSelector(final String base) {
+    private void setupSelector() {
         final StateListDrawable states = new StateListDrawable();
-        setSelectorState(states, base + "_pressed", new int[]{android.R.attr.state_pressed});
-        setSelectorState(states, base, new int[0]);
+        setSelectorState(states, images.pressed(), new int[]{android.R.attr.state_pressed});
+        setSelectorState(states, images.normal(), new int[0]);
 
-        final int res = getResourceByName(base);
-        button.setImageDrawable(states);
+        final StateListDrawable disabledStates = new StateListDrawable();
+        setSelectorState(disabledStates, images.disabled(), new int[0]);
+
+        button.setImageDrawable(enabled ? states : disabledStates);
         button.setBackgroundDrawable(getImage("transparent"));
-//        button.setImageDrawable(states);
     }
 
     private void setSelectorState(final StateListDrawable states, final String imageName, final int[] stateSet) {
@@ -66,13 +70,19 @@ public class DefaultButtonIcon extends LinearLayout implements ButtonIcon {
     public void setAction(final SimpleAction action) {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View view) {
-                action.run();
+                if (enabled) action.run();
             }
         });
     }
 
+    // FIX 22/12/12 Clean up these button images.
     public void setActionEnabled(final boolean enabled) {
         this.enabled = enabled;
-        setupSelector(enabled ? "icon_on" : "icon_off");
+        setupSelector();
+    }
+
+    public void setImages(final ButtonImages images) {
+        this.images = images;
+        setupSelector();
     }
 }

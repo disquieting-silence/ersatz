@@ -22,6 +22,7 @@ import dsq.ersatz.screens.main.action.DefaultActionFactory;
 import dsq.ersatz.screens.main.action.UiActions;
 import dsq.ersatz.screens.main.core.RiposteV;
 import dsq.ersatz.ui.commandbar.ButtonIcon;
+import dsq.ersatz.ui.commandbar.ButtonImages;
 import dsq.ersatz.ui.commandbar.Commandbar;
 import dsq.ersatz.ui.commandbar.DefaultButtonIcon;
 import dsq.ersatz.ui.context.Contexts;
@@ -69,8 +70,12 @@ public class MainFrame extends ListActivity {
         backButton.setAction(new SimpleAction() {
             public void run() {
                 final IdAction idAction = actions.toggleEnabled();
-                Log.v("ERSATZ", "Executing on: " + String.valueOf(current.id));
-                idAction.run(current.id);
+                if (current != null) {
+                    Log.v("ERSATZ", "Executing on: " + String.valueOf(current.id));
+                    idAction.run(current.id);
+                } else {
+
+                }
 
             }
         });
@@ -79,9 +84,14 @@ public class MainFrame extends ListActivity {
             public void run(final long id, final RiposteV v) {
                 current = v;
                 Log.v("ERSATZ", String.valueOf(id));
-                backButton.setActionEnabled(v.enabled);
+                // FIX 22/12/12 Need to fix this.
+                backButton.setActionEnabled(true);
+                backButton.setImages(v.enabled ? new OnButtonImages() : new OffButtonImages());
             }
         };
+
+        backButton.setImages(new OffButtonImages());
+        backButton.setActionEnabled(false);
         rabbit.getList().onSelect(onSelect);
     }
 

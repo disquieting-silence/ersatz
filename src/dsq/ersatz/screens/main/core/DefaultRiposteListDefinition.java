@@ -67,11 +67,6 @@ public class DefaultRiposteListDefinition implements RiposteListDefinition {
             iview.setImageDrawable(drawable);
             return true;
         }
-//        final boolean enabled = isEnabled(cursor);
-//
-//        final LinearLayout parent = (LinearLayout) view.getParent();
-//        final int colour = enabled ? 0x770000BB : 0xFF000000;
-//        parent.setBackgroundColor(colour);
         return false;
     }
 }
