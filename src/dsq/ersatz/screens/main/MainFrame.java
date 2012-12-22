@@ -41,8 +41,6 @@ public class MainFrame extends ListActivity {
     private Buttons buttons;
     private CommandId cid = new DefaultCommandId();
 
-    private RiposteV current;
-
     /**
      * Called when the activity is first created.
      */
@@ -68,7 +66,7 @@ public class MainFrame extends ListActivity {
 
         final ItemAction<RiposteV> onSelect = new ItemAction<RiposteV>() {
             public void run(final long id, final RiposteV v) {
-                current = v;
+
                 cid.set(v.id);
                 Log.v("ERSATZ", String.valueOf(id));
                 commands.update();
@@ -110,13 +108,15 @@ public class MainFrame extends ListActivity {
         final Map<Integer, IntentAction> failure = new HashMap<Integer, IntentAction>();
         failure.put(Requests.ADD_RIPOSTE_REQUEST, actions.cancel());
         final Map<Integer, IntentAction> success = new HashMap<Integer, IntentAction>();
-        success.put(Requests.ADD_RIPOSTE_REQUEST, new IntentAction() {
+        final IntentAction refresher = new IntentAction() {
             // FIX 22/12/12 Don't really think this is a general UI action, but it might be.
             public void run(final Intent intent) {
                 final SimpleAction runner = actions.refresh();
                 runner.run();
             }
-        });
+        };
+        success.put(Requests.ADD_RIPOSTE_REQUEST, refresher);
+        success.put(Requests.EDIT_RIPOSTE_REQUEST, refresher);
         return new DefaultResponses(success, failure);
     }
 

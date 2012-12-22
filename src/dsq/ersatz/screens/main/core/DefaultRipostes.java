@@ -59,6 +59,7 @@ public class DefaultRipostes implements Ripostes {
     public void toggleEnabled(final RiposteId riposteId) {
         final boolean enabled = adapter.isEnabled(riposteId.value);
         update(riposteId, !enabled);
+        broadcast();
     }
 
     private void update(final RiposteId id, final boolean enabled) {
