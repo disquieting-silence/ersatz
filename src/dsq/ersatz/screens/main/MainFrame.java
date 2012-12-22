@@ -66,7 +66,9 @@ public class MainFrame extends ListActivity {
         
         rabbit.getList().onSelect(new IdAction() {
             public void run(final long id) {
+//                getListView().get
                 Log.v("ERSATZ", String.valueOf(id));
+                backButton.setActionEnabled(id == 4);
             }
         });
     }

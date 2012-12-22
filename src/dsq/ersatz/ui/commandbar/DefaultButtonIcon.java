@@ -15,22 +15,29 @@ public class DefaultButtonIcon extends LinearLayout implements ButtonIcon {
     private final ImageButton button;
 
     private boolean enabled = true;
+    private final Context context;
+    private final String iconBase;
 
     public DefaultButtonIcon(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
 
         final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.CommandBarIconLayout);
-        final String value = attributes.getString(R.styleable.CommandBarIconLayout_icon);
+        iconBase = attributes.getString(R.styleable.CommandBarIconLayout_icon);
 
         button = new ImageButton(context);
 
-        final int drawable = context.getResources().getIdentifier(value, "drawable", context.getPackageName());
-        if (drawable > -1) button.setBackgroundResource(drawable);
+        setImageIcon(iconBase);
 
         final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         button.setLayoutParams(params);
 
         addView(button);
+    }
+
+    private void setImageIcon(final String image) {
+        final int drawable = context.getResources().getIdentifier(image, "drawable", context.getPackageName());
+        if (drawable > -1) button.setBackgroundResource(drawable);
     }
 
     /* FIX: Really wish this was an interface .... Dupe from listless. */
@@ -44,5 +51,6 @@ public class DefaultButtonIcon extends LinearLayout implements ButtonIcon {
 
     public void setActionEnabled(final boolean enabled) {
         this.enabled = enabled;
+        setImageIcon(enabled ? iconBase : iconBase + "_disabled");
     }
 }
