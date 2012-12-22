@@ -1,6 +1,6 @@
 package dsq.ersatz.db.riposte;
 
-import android.widget.SimpleCursorAdapter;
+import dsq.ersatz.ui.list.AdapterBinder;
 
-public interface RiposteViewBinder extends SimpleCursorAdapter.ViewBinder {
+public interface RiposteViewBinder extends AdapterBinder {
 }
