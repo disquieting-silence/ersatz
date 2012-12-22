@@ -66,7 +66,7 @@ public class DefaultButtonIcon extends LinearLayout implements ButtonIcon {
     public void setAction(final SimpleAction action) {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View view) {
-                if (enabled) action.run();
+                action.run();
             }
         });
     }

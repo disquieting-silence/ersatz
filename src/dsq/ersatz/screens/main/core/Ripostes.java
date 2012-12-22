@@ -11,4 +11,6 @@ public interface Ripostes {
     void delete(RiposteId rId);
 
     void broadcast();
+
+    void toggleEnabled(RiposteId riposteId);
 }

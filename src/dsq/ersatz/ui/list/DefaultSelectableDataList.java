@@ -40,12 +40,21 @@ public class DefaultSelectableDataList<A> implements SelectableDataList<A> {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(final AdapterView<?> adapterView, final View view, final int i, final long l) {
                 selectedId = listView.getItemIdAtPosition(i);
-                final Cursor cursor = adapter.fetchById(selectedId);
-                final A data = definition.build(cursor);
-                selectAction.run(selectedId, data);
+                notifySelect();
                 refresh();
             }
         });
+    }
+
+    private void notifySelect() {
+        if (selectedId > -1) {
+            final Cursor cursor = adapter.fetchById(selectedId);
+            final int count = cursor.getColumnCount();
+            if (count > 0) {
+                final A data = definition.build(cursor);
+                selectAction.run(selectedId, data);
+            }
+        }
     }
 
     public long selected() {
@@ -69,11 +78,12 @@ public class DefaultSelectableDataList<A> implements SelectableDataList<A> {
             }
         });
         listView.setAdapter(c);
+        notifySelect();
     }
 
     private void highlight(final View cell) {
         final LinearLayout parent = (LinearLayout) cell.getParent();
-        parent.setBackgroundColor(HIGHLIGHT_COLOUR);
+//        parent.setBackgroundColor(HIGHLIGHT_COLOUR);
     }
 
     public void onSelect(final ItemAction<A> action) {

@@ -32,7 +32,7 @@ public class DefaultRipostes implements Ripostes {
     public DefaultRipostes(final ListActivity activity, final SQLiteDatabase db, final Rabbit<RiposteV> rabbit) {
         this.activity = activity;
         adapter = new DefaultRiposteDbAdapter(db);
-        final RiposteListDefinition definition = new DefaultRiposteListDefinition();
+        final RiposteListDefinition definition = new DefaultRiposteListDefinition(activity);
         list = new DefaultSelectableDataList<RiposteV>(activity, adapter, definition, R.layout.riposte_row);
 
         rabbit.setList(list);
@@ -54,5 +54,14 @@ public class DefaultRipostes implements Ripostes {
 
     public void broadcast() {
         broadcast.send(activity, adapter);
+    }
+
+    public void toggleEnabled(final RiposteId riposteId) {
+        final boolean enabled = adapter.isEnabled(riposteId.value);
+        update(riposteId, !enabled);
+    }
+
+    private void update(final RiposteId id, final boolean enabled) {
+        adapter.update(id.value, enabled);
     }
 }

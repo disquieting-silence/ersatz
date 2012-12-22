@@ -61,6 +61,15 @@ public class DefaultUiActions implements UiActions {
         };
     }
 
+    public IdAction toggleEnabled() {
+        return new IdAction() {
+            public void run(final long id) {
+                actions.toggleEnabled(new RiposteId(id));
+            }
+        };
+
+    }
+
     private void deleteById(final long id) {
         final RiposteId rId = new RiposteId(id);
         actions.delete(rId);

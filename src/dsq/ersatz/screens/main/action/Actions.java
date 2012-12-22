@@ -9,4 +9,6 @@ public interface Actions {
     void launchEdit(RiposteId id);
     void launchAdd();
     void launchSettings();
+
+    void toggleEnabled(RiposteId riposteId);
 }

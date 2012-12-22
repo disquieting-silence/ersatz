@@ -45,6 +45,8 @@ public class MainFrame extends ListActivity {
     private Options options;
     private Responses responses;
 
+    private RiposteV current;
+
     /**
      * Called when the activity is first created.
      */
@@ -64,14 +66,23 @@ public class MainFrame extends ListActivity {
 //        registerForContextMenu(getListView());
 
         final ButtonIcon backButton = (DefaultButtonIcon) findViewById(R.id.back);
-        backButton.setAction(actions.launchAdd());
-        
-        rabbit.getList().onSelect(new ItemAction<RiposteV>() {
+        backButton.setAction(new SimpleAction() {
+            public void run() {
+                final IdAction idAction = actions.toggleEnabled();
+                Log.v("ERSATZ", "Executing on: " + String.valueOf(current.id));
+                idAction.run(current.id);
+
+            }
+        });
+
+        final ItemAction<RiposteV> onSelect = new ItemAction<RiposteV>() {
             public void run(final long id, final RiposteV v) {
+                current = v;
                 Log.v("ERSATZ", String.valueOf(id));
                 backButton.setActionEnabled(v.enabled);
             }
-        });
+        };
+        rabbit.getList().onSelect(onSelect);
     }
 
     private Contexts setupContexts() {
