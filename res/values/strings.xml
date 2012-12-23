@@ -48,7 +48,7 @@
     <string name="ui_confirm">Confirm</string>
     <string name="ui_cancel">Cancel</string>
 
-    <string name="ersatz_active">--- ERSATZ ACTIVE ---</string>
+    <string name="ersatz_active">Ersatz</string>
 
 
 </resources>

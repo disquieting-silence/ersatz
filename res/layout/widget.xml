@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:dsq="http://schemas.android.com/apk/res/dsq.ersatz"
               android:id="@+id/widget_container"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:background="@color/shaded"
               android:visibility="gone">
     <TextView android:id="@+id/widget_text"
-              android:layout_width="fill_parent"
+              android:layout_width="wrap_content"
               android:layout_height="fill_parent"
+              android:layout_weight="1.0"
               android:textSize="30sp"
               android:gravity="center"
               android:text="@string/ersatz_active"/>
+
+    <ImageView
+            android:id="@+id/widget_button_cancel"
+            android:background="@drawable/icon_widget_cancel48"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="20dip"
+            style="@style/CommandbarIcon"/>
+
 
 </LinearLayout>
