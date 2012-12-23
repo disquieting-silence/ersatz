@@ -14,7 +14,7 @@ import java.util.List;
 //http://www.androidcompetencycenter.com/2008/12/android-api-sms-handling/
 public class SmsReceiver extends BroadcastReceiver {
 
-    private static final boolean EMULATOR_DEBUGGING = true;
+    private static final boolean EMULATOR_MODE = false;
 
     private final RiposteFirer fire = new DefaultRiposteFirer();
     private final Messages tools = new DefaultMessages();
@@ -37,6 +37,6 @@ public class SmsReceiver extends BroadcastReceiver {
     private String getSmsNumber(final List<SmsMessage> messages) {
         SmsMessage first = messages.get(0);
         String international = first.getOriginatingAddress();
-        return EMULATOR_DEBUGGING ? international : converter.toLocal(international);
+        return EMULATOR_MODE ? international : converter.toLocal(international);
     }
 }
