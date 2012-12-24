@@ -75,7 +75,6 @@ public class DefaultSelectableDataList<A> implements SelectableDataList<A> {
 
     private void highlight(final View cell, final int colour) {
         final LinearLayout parent = (LinearLayout) cell.getParent();
-        Log.v("ERSATZ", String.valueOf("view: " + parent));
         parent.setBackgroundColor(colour);
     }
 

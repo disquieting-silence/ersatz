@@ -8,4 +8,5 @@ public class Requests {
     public static final int NOTIFY_REQUEST = 5;
     public static final int SHOW_RIPOSTE = 6;
     public static final int INSERT_TEMPLATE_REQUEST = 7;
+    public static final int TURN_ALL_OFF = 8;
 }
