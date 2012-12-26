@@ -22,7 +22,7 @@ public class DefaultRiposteFirer implements RiposteFirer {
         Log.v("ERSATZ", "Ripostes: " + ripostes.size());
         for (Riposte riposte : ripostes) {
             // FIX 26/01/12 Handle failure.
-            final Sender s = riposte.message.contains("#") ? sender : locSender;
+            final Sender s = riposte.message.contains("#") ? locSender : sender;
             s.send(context, riposte, number);
         }
         response.update(context, ripostes, currentTime);
