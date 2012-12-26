@@ -3,6 +3,7 @@ package dsq.ersatz.widget;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -13,16 +14,11 @@ import dsq.ersatz.R;
 import dsq.ersatz.requests.Requests;
 import dsq.ersatz.service.DefaultTurnOffService;
 
-public class ErsatzWidgetProvider extends AppWidgetProvider  {
+public class ErsatzWidgetProvider extends BroadcastReceiver {
     
     public static final String RIPOSTE_FIRED = "dsq.ersatz.riposte.fired";
     public static final String ERSATZ_ACTIVE = "ersatz.active";
     public static final String STOP_ALL = "dsq.ersatz.ripostes.stop";
-
-    @Override
-    public void onUpdate(final Context context, final AppWidgetManager appWidgetManager, final int[] appWidgetIds) {
-
-    }
 
     private PendingIntent clicker(final Context context) {
         final Intent intent = new Intent(STOP_ALL);
