@@ -32,6 +32,7 @@ public class DefaultTurnOffService extends IntentService implements TurnOffServi
     protected void onHandleIntent(final Intent intent) {
         if (intent.hasExtra(WIDGET_UPDATE_ALL)) {
             turnOff();
+            stopSelf();
         }
     }
 
