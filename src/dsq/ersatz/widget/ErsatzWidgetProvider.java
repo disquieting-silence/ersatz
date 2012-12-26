@@ -31,7 +31,7 @@ public class ErsatzWidgetProvider extends BroadcastReceiver {
         if (intent.getAction().equals(RIPOSTE_FIRED)) {
             final boolean active = intent.getBooleanExtra(ERSATZ_ACTIVE, false);
             Log.v("ERSATZ", "Active: " + active);
-            AppWidgetManager manager = AppWidgetManager.getInstance(context);
+            final AppWidgetManager manager = AppWidgetManager.getInstance(context);
             final int[] ids = manager.getAppWidgetIds(new ComponentName(context.getPackageName(), getClass().getName()));
             final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
             views.setOnClickPendingIntent(R.id.widget_button_cancel, clicker(context));
