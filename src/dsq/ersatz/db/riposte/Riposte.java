@@ -1,6 +1,8 @@
 package dsq.ersatz.db.riposte;
 
-public class Riposte {
+import java.io.Serializable;
+
+public class Riposte implements Serializable {
     public final long id;
     public final String name;
     public final String message;
