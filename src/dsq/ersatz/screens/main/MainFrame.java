@@ -13,6 +13,8 @@ import dsq.ersatz.action.IntentAction;
 import dsq.ersatz.action.SimpleAction;
 import dsq.ersatz.db.general.DbLifecycle;
 import dsq.ersatz.db.general.DefaultDbLifecycle;
+import dsq.ersatz.location.DefaultLocationIntents;
+import dsq.ersatz.location.LocationReceiver;
 import dsq.ersatz.requests.Requests;
 import dsq.ersatz.screens.main.action.DefaultActionFactory;
 import dsq.ersatz.screens.main.action.UiActions;
@@ -26,6 +28,7 @@ import dsq.ersatz.ui.option.Options;
 import dsq.ersatz.ui.response.DefaultResponses;
 import dsq.ersatz.ui.response.Responses;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -101,6 +104,13 @@ public class MainFrame extends ListActivity {
     private Options setupOptions() {
         final Map<Integer, SimpleAction> mapping = new HashMap<Integer, SimpleAction>();
         mapping.put(R.id.settings, actions.launchSettings());
+        mapping.put(R.id.hack, new SimpleAction() {
+            public void run() {
+                final Intent intent = new Intent(LocationReceiver.LOCATION_UPDATE);
+                intent.putExtra("formatted time", new Date(System.currentTimeMillis()).toString());
+                new DefaultLocationIntents().send(MainFrame.this, intent);
+            }
+        });
         return new DefaultOptions(this, mapping);
     }
 

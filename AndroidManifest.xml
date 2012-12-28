@@ -23,6 +23,12 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".location.LocationReceiver">
+            <intent-filter>
+                <action android:name="dsq.ersatz.location.update"/>
+            </intent-filter>
+        </receiver>
+
         <receiver android:name=".widget.WidgetServices" >
             <intent-filter>
                 <action android:name="dsq.ersatz.ripostes.stop" />
