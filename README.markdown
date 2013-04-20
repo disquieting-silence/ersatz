@@ -1,3 +1,9 @@
+DISCLAIMER
+==========
+
+WARNING: This application can send SMS messages from your phone if you install it onto your phone, which can cost you money. Through various stages of its development, it has been guilty of generating a continuous stream of SMS messages until it was forcefully stopped. The state of this code is in constant development, and cannot be trusted for real-time appilcations. That goes double if not triple for any non-master branch. Thank you for your attention.
+
+
 ersatz
 ======
 
