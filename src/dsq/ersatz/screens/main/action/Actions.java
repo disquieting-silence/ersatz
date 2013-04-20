@@ -1,6 +1,5 @@
 package dsq.ersatz.screens.main.action;
 
-import dsq.ersatz.action.IdAction;
 import dsq.ersatz.data.data.RiposteId;
 
 public interface Actions {

@@ -1,0 +1,1 @@
+(ant clean && cd ../sycophant && ant debug && cd ../ersatz && rm -rf bin && ant debug install)
