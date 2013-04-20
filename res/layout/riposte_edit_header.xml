@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:dsq="http://schemas.android.com/apk/res/dsq.ersatz"
+              android:id="@+id/riposte_edit_tabs"
+              style="@style/Tabbar">
+    <dsq.sycophant.layout.tabbar.button.DefaultClickTabIcon
+            android:id="@+id/riposte_edit_general_tab"
+            dsq:icon="icon"
+            android:paddingTop="0px"
+            style="@style/TabbarIcon"/>
+
+    <dsq.sycophant.layout.tabbar.button.DefaultClickTabIcon
+            android:id="@+id/riposte_edit_message_tab"
+            dsq:icon="icon"
+            android:paddingTop="0px"
+            style="@style/TabbarIcon"/>
+
+    <dsq.sycophant.layout.tabbar.button.DefaultClickTabIcon
+            android:id="@+id/riposte_edit_recipients_tab"
+            dsq:icon="icon"
+            android:paddingTop="0px"
+            style="@style/TabbarIcon"/>
+</LinearLayout>

@@ -1,26 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
-         android:layout_width="fill_parent"
-         android:layout_height="fill_parent"
-         android:id="@+id/tabHost">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent" android:layout_height="fill_parent"
+              android:orientation="vertical">
 
-<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
-                  android:orientation="vertical">
-    <TabWidget
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:id="@android:id/tabs"
-            />
+    <include layout="@layout/riposte_edit_header" />
 
     <FrameLayout
             android:layout_width="fill_parent"
-            android:layout_below="@android:id/tabs"
+            android:layout_below="@+id/riposte_edit_tabs"
             android:layout_height="0dip"
             android:layout_weight="1.0"
-            android:id="@android:id/tabcontent"
+            android:id="@+id/riposte_edit_tab_view"
             >
 
         <LinearLayout android:id="@+id/tab_general"
@@ -74,21 +65,6 @@
         </LinearLayout>
     </FrameLayout>
 
-    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent"
-                  android:layout_height="wrap_content" android:layout_gravity="bottom"
-                  android:layout_alignParentBottom="true">
-        <Button android:id="@+id/cancel"
-                android:text="@string/ui_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"/>
-
-        <Button android:id="@+id/confirm"
-                android:text="@string/ui_confirm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"/>
-    </LinearLayout>
+    <include layout="@layout/riposte_edit_footer"/>
 
 </LinearLayout>
-</TabHost>

@@ -34,6 +34,9 @@ import dsq.sycophant.action.IntentAction;
 import dsq.sycophant.action.SimpleAction;
 import dsq.sycophant.ui.button.Buttons;
 import dsq.sycophant.ui.button.DefaultButtons;
+import dsq.sycophant.ui.tabbar.Tabbar;
+import dsq.sycophant.ui.tabbar.ViewTabbar;
+import dsq.thedroid.ui.ComponentIndex;
 import dsq.thedroid.util.DefaultStateExtractor;
 import dsq.thedroid.util.StateExtractor;
 
@@ -47,9 +50,6 @@ public class RiposteEdit extends ListActivity {
     private UiActions actions;
 
     private final StateExtractor extractor = new DefaultStateExtractor();
-
-    /* Might make these static */
-    private Tabs tabs = new DefaultTabs();
 
     private Buttons buttons;
     private Options options;
@@ -115,24 +115,29 @@ public class RiposteEdit extends ListActivity {
         return new DefaultButtons(this, commands);
     }
 
-    private void updateKeyboard(final TabHost host, final String tabName) {
+    private void updateKeyboard(final long id) {
         final KeyboardUtil keyboard = new DefaultKeyboardUtil();
-        final String label = getString(R.string.tab_recipients);
-        if (label.equals(tabName)) {
-            keyboard.hide(this, host);
+        final View parent = findViewById(R.id.riposte_edit_tab_view);
+        if (id == R.id.riposte_edit_recipients_tab){
+            keyboard.hide(this, parent);
         }
     }
 
     private void setupTabs() {
-        final TabHost host = tabs.install(this, R.id.tabHost, Arrays.asList(
-                new TabInfo(R.string.tab_general, R.id.tab_general),
-                new TabInfo(R.string.tab_message, R.id.tab_message),
-                new TabInfo(R.string.tab_recipients, R.id.tab_recipients)
-        ));
+        final Map<Integer, ComponentIndex> tabActions = new HashMap<Integer, ComponentIndex>();
+        tabActions.put(R.id.riposte_edit_general_tab, new ComponentIndex(R.id.tab_general));
+        tabActions.put(R.id.riposte_edit_message_tab, new ComponentIndex(R.id.tab_message));
+        tabActions.put(R.id.riposte_edit_recipients_tab, new ComponentIndex(R.id.tab_recipients));
 
-        host.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
-            public void onTabChanged(final String s) {
-                updateKeyboard(host, s);
+        final Tabbar tabs = new ViewTabbar(this, new ComponentIndex(R.id.riposte_edit_tab_view), tabActions);
+        tabs.register();
+
+        tabs.select(R.id.riposte_edit_general_tab);
+        tabs.trigger(R.id.riposte_edit_general_tab);
+
+        tabs.setOnChange(new IdAction() {
+            public void run(final long id) {
+                updateKeyboard(id);
             }
         });
     }
