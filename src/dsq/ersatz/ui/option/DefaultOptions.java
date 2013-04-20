@@ -3,7 +3,7 @@ package dsq.ersatz.ui.option;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
-import dsq.ersatz.action.SimpleAction;
+import dsq.sycophant.action.SimpleAction;
 import dsq.thedroid.ui.DefaultMenus;
 import dsq.thedroid.ui.Menus;
 

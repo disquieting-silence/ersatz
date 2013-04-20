@@ -1,6 +1,6 @@
 package dsq.ersatz.screens.main;
 
-import dsq.ersatz.ui.list.SelectableDataList;
+import dsq.sycophant.datalist.SelectableDataList;
 
 public interface Rabbit<A> {
     SelectableDataList<A> getList();

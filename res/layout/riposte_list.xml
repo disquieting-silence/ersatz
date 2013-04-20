@@ -26,19 +26,19 @@
 
 
     <LinearLayout style="@style/Commandbar">
-        <dsq.ersatz.ui.commandbar.DefaultButtonIcon
+        <dsq.sycophant.layout.commandbar.button.DefaultButtonIcon
                 android:id="@+id/command_toggle"
                 dsq:icon="icon"
                 android:paddingTop="8px"
                 style="@style/CommandbarIcon"/>
 
-        <dsq.ersatz.ui.commandbar.DefaultButtonIcon
+        <dsq.sycophant.layout.commandbar.button.DefaultButtonIcon
                 android:id="@+id/command_edit"
                 dsq:icon="icon_edit"
                 android:paddingTop="8px"
                 style="@style/CommandbarIcon"/>
 
-        <dsq.ersatz.ui.commandbar.DefaultButtonIcon
+        <dsq.sycophant.layout.commandbar.button.DefaultButtonIcon
                 android:id="@+id/command_delete"
                 dsq:icon="icon_delete"
                 android:paddingTop="8px"

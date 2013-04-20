@@ -1,6 +1,6 @@
 package dsq.ersatz.screens.main;
 
-import dsq.ersatz.ui.list.SelectableDataList;
+import dsq.sycophant.datalist.SelectableDataList;
 
 // FIX 22/12/12 Questionable concept. See how it pans out.
 public class DefaultRabbit<A> implements Rabbit<A> {

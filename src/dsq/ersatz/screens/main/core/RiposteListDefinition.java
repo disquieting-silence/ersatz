@@ -1,6 +1,6 @@
 package dsq.ersatz.screens.main.core;
 
-import dsq.ersatz.ui.list.ListDefinition;
+import dsq.sycophant.action.ListDefinition;
 
 public interface RiposteListDefinition extends ListDefinition<RiposteV> {
 }

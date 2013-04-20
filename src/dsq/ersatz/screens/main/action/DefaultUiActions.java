@@ -3,11 +3,11 @@ package dsq.ersatz.screens.main.action;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
-import dsq.ersatz.action.IdAction;
-import dsq.ersatz.action.IntentAction;
-import dsq.ersatz.action.SimpleAction;
 import dsq.ersatz.data.data.RiposteId;
 import dsq.ersatz.db.riposte.RiposteDbAdapter;
+import dsq.sycophant.action.IdAction;
+import dsq.sycophant.action.IntentAction;
+import dsq.sycophant.action.SimpleAction;
 
 // FIX 19/12/12 Split me up.
 public class DefaultUiActions implements UiActions {

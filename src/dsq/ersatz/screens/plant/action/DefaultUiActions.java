@@ -1,6 +1,7 @@
 package dsq.ersatz.screens.plant.action;
 
-import dsq.ersatz.action.SimpleAction;
+
+import dsq.sycophant.action.SimpleAction;
 
 public class DefaultUiActions implements UiActions {
 

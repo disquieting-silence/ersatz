@@ -1,24 +1,13 @@
 package dsq.ersatz.screens.main.core;
 
 import android.app.ListActivity;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import dsq.ersatz.R;
-import dsq.ersatz.action.IdAction;
 import dsq.ersatz.data.data.RiposteId;
 import dsq.ersatz.db.riposte.*;
 import dsq.ersatz.screens.main.Rabbit;
-import dsq.ersatz.ui.list.DefaultSelectableDataList;
-import dsq.ersatz.ui.list.SelectableDataList;
-import dsq.thedroid.ui.ComponentIndex;
-import dsq.thedroid.ui.DefaultLists;
-import dsq.thedroid.ui.ListMapping;
-import dsq.thedroid.ui.Lists;
+import dsq.sycophant.datalist.DefaultSelectableDataList;
+import dsq.sycophant.datalist.SelectableDataList;
 
 public class DefaultRipostes implements Ripostes {
 

@@ -2,7 +2,7 @@ package dsq.ersatz.ui.response;
 
 import android.app.Activity;
 import android.content.Intent;
-import dsq.ersatz.action.IntentAction;
+import dsq.sycophant.action.IntentAction;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -8,9 +8,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import dsq.ersatz.R;
-import dsq.ersatz.action.IdAction;
-import dsq.ersatz.action.IntentAction;
-import dsq.ersatz.action.SimpleAction;
 import dsq.ersatz.db.general.DbLifecycle;
 import dsq.ersatz.db.general.DefaultDbLifecycle;
 import dsq.ersatz.location.DefaultLocationIntents;
@@ -19,14 +16,22 @@ import dsq.ersatz.requests.Requests;
 import dsq.ersatz.screens.main.action.DefaultActionFactory;
 import dsq.ersatz.screens.main.action.UiActions;
 import dsq.ersatz.screens.main.core.RiposteV;
-import dsq.ersatz.ui.button.Buttons;
-import dsq.ersatz.ui.button.DefaultButtons;
-import dsq.ersatz.ui.commandbar.*;
-import dsq.ersatz.ui.list.ItemAction;
+
 import dsq.ersatz.ui.option.DefaultOptions;
 import dsq.ersatz.ui.option.Options;
 import dsq.ersatz.ui.response.DefaultResponses;
 import dsq.ersatz.ui.response.Responses;
+import dsq.sycophant.action.IdAction;
+import dsq.sycophant.action.IntentAction;
+import dsq.sycophant.action.ItemAction;
+import dsq.sycophant.action.SimpleAction;
+import dsq.sycophant.layout.commandbar.button.ButtonIcon;
+import dsq.sycophant.store.DefaultIdStore;
+import dsq.sycophant.store.IdStore;
+import dsq.sycophant.ui.button.Buttons;
+import dsq.sycophant.ui.button.DefaultButtons;
+import dsq.sycophant.ui.commandbar.Commandbar;
+import dsq.sycophant.ui.commandbar.DefaultCommandbar;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -42,7 +47,7 @@ public class MainFrame extends ListActivity {
     private Responses responses;
     private Commandbar commands;
     private Buttons buttons;
-    private CommandId cid = new DefaultCommandId();
+    private IdStore cid = new DefaultIdStore();
 
     /**
      * Called when the activity is first created.

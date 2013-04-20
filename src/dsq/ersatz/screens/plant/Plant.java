@@ -4,14 +4,14 @@ import android.app.Activity;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import dsq.ersatz.R;
-import dsq.ersatz.action.SimpleAction;
 import dsq.ersatz.db.general.DbLifecycle;
 import dsq.ersatz.db.general.DefaultDbLifecycle;
 import dsq.ersatz.screens.plant.action.ActionFactory;
 import dsq.ersatz.screens.plant.action.DefaultActionFactory;
 import dsq.ersatz.screens.plant.action.UiActions;
-import dsq.ersatz.ui.button.Buttons;
-import dsq.ersatz.ui.button.DefaultButtons;
+import dsq.sycophant.action.SimpleAction;
+import dsq.sycophant.ui.button.Buttons;
+import dsq.sycophant.ui.button.DefaultButtons;
 
 import java.util.HashMap;
 import java.util.Map;

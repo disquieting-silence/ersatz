@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
-import dsq.ersatz.action.IdAction;
+import dsq.sycophant.action.IdAction;
 import dsq.thedroid.ui.DefaultMenus;
 import dsq.thedroid.ui.Menus;
 

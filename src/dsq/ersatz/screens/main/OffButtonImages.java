@@ -1,6 +1,6 @@
 package dsq.ersatz.screens.main;
 
-import dsq.ersatz.ui.commandbar.ButtonImages;
+import dsq.sycophant.ui.button.ButtonImages;
 
 public class OffButtonImages implements ButtonImages {
     public String normal() {
